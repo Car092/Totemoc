@@ -10,7 +10,6 @@ mWindow(sf::VideoMode(1024, 768), "pTotemoc", sf::Style::Close)
 void Game::run(){
 
 	while (mWindow.isOpen()){
-
 		processEvents();
 		update();
 		render();
@@ -26,9 +25,7 @@ void Game::processEvents(){
 }
 
 void Game::update(){
-
 	mPlayer.update();
-
 }
 
 void Game::render(){

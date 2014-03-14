@@ -16,4 +16,4 @@ private:
 	void update();
 	void render();
 
-}
+};

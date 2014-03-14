@@ -6,7 +6,7 @@
 
 class Tilemap{
 	private:
-		const std::vector<std::vector<Tile>> mMap;
+		std::vector<std::vector<Tile>> mMap;
 
 	public:
 		Tilemap();
