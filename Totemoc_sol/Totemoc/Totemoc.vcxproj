@@ -41,8 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\Carlos\source\repos\Totemoc\sfml\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Carlos\source\repos\Totemoc\sfml\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>../../sfml/include;$(IncludePath)</IncludePath>
+    <LibraryPath>../../sfml/lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
