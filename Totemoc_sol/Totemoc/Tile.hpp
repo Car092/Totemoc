@@ -5,6 +5,8 @@
 
 class Tile{
 	private:
+		const int mWidth;
+		const int mHeight;
 		sf::Color mColor;
 		sf::RectangleShape mShape;
 	public:

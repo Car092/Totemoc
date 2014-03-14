@@ -1,6 +1,6 @@
 #include "Tile.hpp"
 
-Tile::Tile(int type){
+Tile::Tile(int type):mWidth(50), mHeight(50){
 	switch (type){
 		case 0:
 			mColor = sf::Color::Green;
