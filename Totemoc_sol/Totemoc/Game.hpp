@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-
+#include "Player.hpp"
 
 class Game {
 public:

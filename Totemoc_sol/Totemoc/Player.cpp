@@ -1,8 +1,7 @@
 #include "Player.hpp"
 
-Player::Player()
-
-	:sf::Sprite(){
+Player::Player() : sf::Sprite(sf::Texture())
+	{
 
 }
 

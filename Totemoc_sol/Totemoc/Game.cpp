@@ -1,8 +1,8 @@
 #include "Game.hpp"
 
 Game::Game() :
-mWindow(sf::VideoMode(640, 480), "pTotemoc", sf::Syle::Close)
-,mPlayer
+mWindow(sf::VideoMode(1024, 768), "pTotemoc", sf::Style::Close)
+, mPlayer()
 {
 	mPlayer.setPosition(100.f, 100.f);
 }

@@ -22,8 +22,8 @@ Tile::Tile(int type):mWidth(50), mHeight(50){
 
 void Tile::draw(sf::RenderWindow& window, int tileX, int tileY, int camX, int camY){
 	sf::Vector2f screenPos;
-	screenPos.x = tileX - camX;
-	screenPos.y = tileY - camY;
+	screenPos.x = (tileX - camX)*mWidth;
+	screenPos.y = (tileY - camY)*mHeight;
 	mShape.setPosition(screenPos);
 	window.draw(mShape);
 }
