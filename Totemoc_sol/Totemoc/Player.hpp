@@ -1,17 +1,19 @@
 #include <SFML/Graphics.hpp>
 
-class Player : public sf::Sprite
+class Player
 {
 
 private:
 	sf::Vector2f mWorldPos;
-	const sf::Vector2i mScreenPos;
-	int direction;
-	float speed;
-	sf::Texture texturePlayer;
-
+	sf::Vector2f mWorldDest;
+	const sf::Vector2f mScreenPos;
+	sf::Vector2f mDir;
+	float mSpeed;
+	sf::Sprite mSprite;
+	sf::Texture mTexture;
 public:
 	Player();
-	void update();
+	void update(sf::Time dt);
 	sf::Vector2f getWorldPos();
+	void draw(sf::RenderWindow& window);
 };

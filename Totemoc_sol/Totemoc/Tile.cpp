@@ -18,6 +18,7 @@ Tile::Tile(int type):mWidth(50), mHeight(50){
 			mColor = sf::Color::Cyan;
 	}
 	mShape.setFillColor(mColor);
+	mShape.setSize(sf::Vector2f((float)mWidth, (float)mHeight));
 }
 
 void Tile::draw(sf::RenderWindow& window, int tileX, int tileY, int camX, int camY){

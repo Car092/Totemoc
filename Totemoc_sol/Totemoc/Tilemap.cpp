@@ -51,10 +51,13 @@ void Tilemap::draw(sf::RenderWindow& window, int playerX, int playerY){
 	int offscreenCornerY = playerY - (mOffscreenTSize.y / 2);
 	int screenCornerX = playerX - (mScreenTSize.x / 2);
 	int screenCornerY = playerY - (mScreenTSize.y / 2);
-	for (int i = 0; i < mOffscreenTSize.x; i++){
-		for (int j = 0; j < mOffscreenTSize.y; j++){
-			if (offscreenCornerX < 0 || offscreenCornerY < 0) continue;
-			mMap[offscreenCornerX + i][offscreenCornerY + j].draw(window, i, j, screenCornerX, screenCornerY);
+	for (int i = 0; i < mOffscreenTSize.y; i++){
+		for (int j = 0; j < mOffscreenTSize.x; j++){
+			if (offscreenCornerX + j < 0 || offscreenCornerY + i < 0 ||
+				offscreenCornerX + j >(int)mMap[0].size() - 1 || offscreenCornerY + i >(int)mMap.size() - 1){
+				continue;
+			}
+			mMap[offscreenCornerY + i][offscreenCornerX + j].draw(window, j, i, screenCornerX, screenCornerY);
 		}
 	}
 }
