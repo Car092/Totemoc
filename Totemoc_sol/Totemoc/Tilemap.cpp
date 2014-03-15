@@ -1,7 +1,10 @@
 #include "Tilemap.hpp"
-/*
-Tilemap::Tilemap(){
-	mMap = {
+
+Tilemap::Tilemap() :
+	mOffscreenTSize(20, 15),
+	mScreenTSize(20, 15)
+{
+	std::vector<std::vector<int>> mapRaw = {
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 1, 0, 0, 0, 0, 2, 2, 2, 2, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 1, 0, 0, 0, 0, 2, 0, 0, 2, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -33,5 +36,25 @@ Tilemap::Tilemap(){
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
 	};
+
+	for (int i = 0; i < (int)mapRaw.size(); i++){
+		std::vector<Tile> row;
+		for (int j = 0; j < (int)mapRaw[0].size(); j++){
+			row.push_back(Tile(mapRaw[i][j]));
+		}
+		mMap.push_back(row);
+	}
 }
-*/
+
+void Tilemap::draw(sf::RenderWindow& window, int playerX, int playerY){
+	int offscreenCornerX = playerX - (mOffscreenTSize.x / 2);
+	int offscreenCornerY = playerY - (mOffscreenTSize.y / 2);
+	int screenCornerX = playerX - (mScreenTSize.x / 2);
+	int screenCornerY = playerY - (mScreenTSize.y / 2);
+	for (int i = 0; i < mOffscreenTSize.x; i++){
+		for (int j = 0; j < mOffscreenTSize.y; j++){
+			if (offscreenCornerX < 0 || offscreenCornerY < 0) continue;
+			mMap[offscreenCornerX + i][offscreenCornerY + j].draw(window, i, j, screenCornerX, screenCornerY);
+		}
+	}
+}

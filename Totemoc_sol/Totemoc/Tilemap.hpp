@@ -7,11 +7,12 @@
 class Tilemap{
 	private:
 		std::vector<std::vector<Tile>> mMap;
-
+		const sf::Vector2i mOffscreenTSize;
+		const sf::Vector2i mScreenTSize;
 	public:
 		Tilemap();
 		bool loadMap(std::string tilemap);
-		void draw(int playerX, int playerY);
+		void draw(sf::RenderWindow& window, int playerX, int playerY);
 };
 
 #endif //TOTEMOC_TILEMAP_HPP

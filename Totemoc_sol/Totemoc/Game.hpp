@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "Player.hpp"
+#include "Tilemap.hpp"
 
 class Game {
 public:
@@ -11,6 +12,7 @@ public:
 private:
 	sf::RenderWindow mWindow;
 	Player mPlayer;
+	Tilemap mTilemap;
 
 	void processEvents();
 	void update();

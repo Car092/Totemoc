@@ -1,14 +1,23 @@
 #include "Player.hpp"
 
-Player::Player() : sf::Sprite()
+Player::Player() : 
+	sf::Sprite(),
+	mWorldPos(0, 0),
+	mScreenPos(568, 384)
 {
-	sf::Texture tex;
-	tex.loadFromFile("Resource Files/player.png");
-	this->setTexture(tex);
+	this->setPosition(498.0f, 344.0f);
+	if (!texturePlayer.loadFromFile("Resource Files/player.png")){
+		throw std::runtime_error("Player::Player failed to load its sprite Files/player.png");
+	}
+	this->setTexture(texturePlayer);
 }
 
 void Player::update()
 {
 
 
+}
+
+sf::Vector2f Player::getWorldPos(){
+	return mWorldPos;
 }

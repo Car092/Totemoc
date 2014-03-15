@@ -2,13 +2,12 @@
 
 Game::Game() :
 mWindow(sf::VideoMode(1024, 768), "pTotemoc", sf::Style::Close)
-, mPlayer()
+, mPlayer(), mTilemap()
 {
-	mPlayer.setPosition(100.f, 100.f);
+
 }
 
 void Game::run(){
-
 	while (mWindow.isOpen()){
 		processEvents();
 		update();
@@ -30,6 +29,7 @@ void Game::update(){
 
 void Game::render(){
 	mWindow.clear();
+	mTilemap.draw(mWindow, (int)mPlayer.getWorldPos().x, (int)mPlayer.getWorldPos().y);
 	mWindow.draw(mPlayer);
 	mWindow.display();
 }
