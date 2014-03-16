@@ -2,10 +2,10 @@
 
 Player::Player() : 
 	mSprite(),
-	mWorldPos(0, 0),
+	mWorldPos(20, 15),
 	mWorldDest(0, 0),
 	mScreenPos(Sizes::PLAYER_SCR_POS),
-	mSpeed(1.0f),
+	mSpeed(3.0f),
 	mDir()
 {
 	mSprite.setPosition(mScreenPos);
