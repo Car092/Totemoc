@@ -9,8 +9,8 @@ Player::Player() :
 	mDir()
 {
 	mSprite.setPosition(mScreenPos);
-	if (!mTexture.loadFromFile("Resource Files/player.png")){
-		throw std::runtime_error("Player::Player failed to load its sprite Files/player.png");
+	if (!mTexture.loadFromFile("Resource Files/Old_Outfit_Male.png")){
+		throw std::runtime_error("Player::Player failed to load sprite");
 	}
 	mSprite.setTexture(mTexture);
 }
