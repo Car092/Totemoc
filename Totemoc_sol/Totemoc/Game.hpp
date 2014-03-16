@@ -1,5 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include "SizeConstants.hpp"
+#include "TimeConstants.hpp"
 #include "Player.hpp"
 #include "Tilemap.hpp"
 
@@ -12,7 +14,6 @@ private:
 	sf::RenderWindow mWindow;
 	Player mPlayer;
 	Tilemap mTilemap;
-	const sf::Time TIME_P_FRAME;
 
 	void processEvents();
 	void update();

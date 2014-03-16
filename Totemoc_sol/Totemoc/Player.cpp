@@ -4,8 +4,8 @@ Player::Player() :
 	mSprite(),
 	mWorldPos(0, 0),
 	mWorldDest(0, 0),
-	mScreenPos(498.0f, 334.0f),
-	mSpeed(10.0f),
+	mScreenPos(Sizes::PLAYER_SCR_POS),
+	mSpeed(1.0f),
 	mDir()
 {
 	mSprite.setPosition(mScreenPos);

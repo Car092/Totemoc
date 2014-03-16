@@ -89,8 +89,10 @@
   <ItemGroup>
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="Player.hpp" />
+    <ClInclude Include="SizeConstants.hpp" />
     <ClInclude Include="Tile.hpp" />
     <ClInclude Include="Tilemap.hpp" />
+    <ClInclude Include="TimeConstants.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,8 +1,6 @@
 #include "Tilemap.hpp"
 
-Tilemap::Tilemap() :
-	mOffscreenTSize(20, 15),
-	mScreenTSize(20, 15)
+Tilemap::Tilemap()
 {
 	std::vector<std::vector<int>> mapRaw = {
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -46,13 +44,13 @@ Tilemap::Tilemap() :
 	}
 }
 
-void Tilemap::draw(sf::RenderWindow& window, int playerX, int playerY){
-	int offscreenCornerX = playerX - (mOffscreenTSize.x / 2);
-	int offscreenCornerY = playerY - (mOffscreenTSize.y / 2);
-	int screenCornerX = playerX - (mScreenTSize.x / 2);
-	int screenCornerY = playerY - (mScreenTSize.y / 2);
-	for (int i = 0; i < mOffscreenTSize.y; i++){
-		for (int j = 0; j < mOffscreenTSize.x; j++){
+void Tilemap::draw(sf::RenderWindow& window, float playerX, float playerY){
+	float offscreenCornerX = playerX - (Sizes::EXTRA_TILES_PER_SCREEN.x / 2);
+	float offscreenCornerY = playerY - (Sizes::EXTRA_TILES_PER_SCREEN.y / 2);
+	float screenCornerX = playerX - (Sizes::TILES_PER_SCREEN.x / 2);
+	float screenCornerY = playerY - (Sizes::TILES_PER_SCREEN.y / 2);
+	for (int i = 0; i < Sizes::EXTRA_TILES_PER_SCREEN.y; i++){
+		for (int j = 0; j < Sizes::EXTRA_TILES_PER_SCREEN.x; j++){
 			if (offscreenCornerX + j < 0 || offscreenCornerY + i < 0 ||
 				offscreenCornerX + j >(int)mMap[0].size() - 1 || offscreenCornerY + i >(int)mMap.size() - 1){
 				continue;

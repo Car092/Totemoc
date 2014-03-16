@@ -44,5 +44,11 @@
     <ClInclude Include="Tilemap.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SizeConstants.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeConstants.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

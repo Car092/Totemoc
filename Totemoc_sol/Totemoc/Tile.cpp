@@ -1,6 +1,6 @@
 #include "Tile.hpp"
 
-Tile::Tile(int type):mWidth(50), mHeight(50){
+Tile::Tile(int type){
 	switch (type){
 		case 0:
 			mColor = sf::Color::Green;
@@ -18,13 +18,13 @@ Tile::Tile(int type):mWidth(50), mHeight(50){
 			mColor = sf::Color::Cyan;
 	}
 	mShape.setFillColor(mColor);
-	mShape.setSize(sf::Vector2f((float)mWidth, (float)mHeight));
+	mShape.setSize(sf::Vector2f((float)Sizes::TILE_SIZE.x, (float)Sizes::TILE_SIZE.y));
 }
 
-void Tile::draw(sf::RenderWindow& window, int tileX, int tileY, int camX, int camY){
+void Tile::draw(sf::RenderWindow& window, int tileX, int tileY, float camX, float camY){
 	sf::Vector2f screenPos;
-	screenPos.x = (float)(tileX - camX)*mWidth;
-	screenPos.y = (float)(tileY - camY)*mHeight;
+	screenPos.x = (float)(tileX - camX)*Sizes::TILE_SIZE.x;
+	screenPos.y = (float)(tileY - camY)*Sizes::TILE_SIZE.y;
 	mShape.setPosition(screenPos);
 	window.draw(mShape);
 }
