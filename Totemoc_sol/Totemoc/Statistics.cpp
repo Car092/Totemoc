@@ -6,10 +6,7 @@ mRenderFrames(),
 mLogicFrames(),
 mTimeRender(),
 mTimeLogic(){
-	if (!mFont.loadFromFile("Resource Files/estre.ttf")){
-		throw std::runtime_error("Statistics failed to load font file");
-	}
-	mText.setFont(mFont);
+	mText.setFont(Resources::fonts.get(Resources::FontID::estre));
 	mText.setString("Calculating statistics");
 	mText.setColor(sf::Color::White);
 	mText.setPosition(0.0f, 0.0f);

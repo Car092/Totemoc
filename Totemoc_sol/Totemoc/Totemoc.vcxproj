@@ -83,6 +83,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Statistics.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Tilemap.cpp" />
@@ -90,11 +91,16 @@
   <ItemGroup>
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="Player.hpp" />
+    <ClInclude Include="ResourceHolder.hpp" />
+    <ClInclude Include="Resources.hpp" />
     <ClInclude Include="SizeConstants.hpp" />
     <ClInclude Include="Statistics.hpp" />
     <ClInclude Include="Tile.hpp" />
     <ClInclude Include="Tilemap.hpp" />
     <ClInclude Include="TimeConstants.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ResourceHolder.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

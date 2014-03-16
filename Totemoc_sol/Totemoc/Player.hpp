@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "SizeConstants.hpp"
+#include "Resources.hpp"
 
 class Player
 {
@@ -11,7 +12,6 @@ private:
 	sf::Vector2f mDir;
 	float mSpeed;
 	sf::Sprite mSprite;
-	sf::Texture mTexture;
 public:
 	Player();
 	void update(sf::Time dt);

@@ -3,10 +3,10 @@
 
 #include <SFML\System.hpp>
 #include <SFML\Graphics.hpp>
+#include "Resources.hpp"
 
 class Statistics{
 private:
-	sf::Font mFont;
 	sf::Text mText;
 	sf::Time mTimeRender;
 	sf::Time mTimeLogic;
