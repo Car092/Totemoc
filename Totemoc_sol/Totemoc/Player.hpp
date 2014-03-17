@@ -1,3 +1,6 @@
+#ifndef TOTEMOC_PLAYER_HPP
+#define TOTEMOC_PLAYER_HPP
+
 #include <SFML/Graphics.hpp>
 #include "SizeConstants.hpp"
 #include "Resources.hpp"
@@ -18,3 +21,5 @@ public:
 	sf::Vector2f getWorldPos();
 	void draw(sf::RenderWindow& window);
 };
+
+#endif //TOTEMOC_PLAYER_HPP

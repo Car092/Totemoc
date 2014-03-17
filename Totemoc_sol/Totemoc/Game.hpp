@@ -1,3 +1,6 @@
+#ifndef TOTEMOC_GAME_HPP
+#define TOTEMOC_GAME_HPP
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "SizeConstants.hpp"
@@ -22,3 +25,5 @@ private:
 	void render();
 
 };
+
+#endif //TOTEMOC_GAME_HPP
