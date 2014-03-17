@@ -9,7 +9,7 @@ Player::Player() :
 	mDir()
 {
 	mSprite.setPosition(mScreenPos);
-	mSprite.setTexture(Resources::textures.get(Resources::TextureID::player));
+	mSprite.setTexture(Resources::textures->get(Resources::TextureID::player));
 }
 
 void Player::update(sf::Time dt)

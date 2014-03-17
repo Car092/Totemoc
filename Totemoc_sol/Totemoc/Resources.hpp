@@ -12,9 +12,11 @@ public:
 	enum FontID{
 		estre
 	};
+	static ResourceHolder<sf::Texture, TextureID>* textures;
+	static ResourceHolder<sf::Font, FontID>* fonts;
+
 	Resources();
-	static ResourceHolder<sf::Texture, TextureID> textures;
-	static ResourceHolder<sf::Font, FontID> fonts;
+	~Resources();
 };
 
 #endif //TOTEMOC_RESOURCES_HPP

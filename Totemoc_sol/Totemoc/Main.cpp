@@ -1,7 +1,7 @@
 #include "Game.hpp"
 
 int main(){
-	Resources Resources;
+	Resources resources;
 	Game game;
 	game.run();
 }

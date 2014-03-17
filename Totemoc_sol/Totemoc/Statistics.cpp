@@ -6,7 +6,7 @@ mRenderFrames(),
 mLogicFrames(),
 mTimeRender(),
 mTimeLogic(){
-	mText.setFont(Resources::fonts.get(Resources::FontID::estre));
+	mText.setFont(Resources::fonts->get(Resources::FontID::estre));
 	mText.setString("Calculating statistics");
 	mText.setColor(sf::Color::White);
 	mText.setPosition(0.0f, 0.0f);
