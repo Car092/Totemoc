@@ -1,3 +1,6 @@
+#ifndef TOTEMOC_GAME_HPP
+#define TOTEMOC_GAME_HPP
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "Player.hpp"
@@ -16,4 +19,5 @@ private:
 	void update();
 	void render();
 
-}
+};
+#endif //TOTEMOC_GAME_HPP

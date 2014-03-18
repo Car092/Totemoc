@@ -4,7 +4,7 @@ Game::Game() :
 mWindow(sf::VideoMode(1024, 768), "pTotemoc", sf::Style::Close)
 , mPlayer()
 {
-	mPlayer.setPosition(100.f, 100.f);
+	
 }
 
 void Game::run(){
@@ -33,6 +33,6 @@ void Game::update(){
 
 void Game::render(){
 	mWindow.clear();
-	mWindow.draw(mPlayer);
+	mPlayer.draw();
 	mWindow.display();
 }
