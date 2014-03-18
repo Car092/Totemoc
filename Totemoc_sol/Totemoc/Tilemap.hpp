@@ -2,16 +2,15 @@
 #define TOTEMOC_TILEMAP_HPP
 
 #include "Tile.hpp"
-
+#include "SizeConstants.hpp"
 
 class Tilemap{
 	private:
-		const std::vector<std::vector<Tile>> mMap;
-
+		std::vector<std::vector<Tile>> mMap;
 	public:
 		Tilemap();
 		bool loadMap(std::string tilemap);
-		void draw(int playerX, int playerY);
+		void draw(sf::RenderWindow& window, float playerX, float playerY);
 };
 
 #endif //TOTEMOC_TILEMAP_HPP
