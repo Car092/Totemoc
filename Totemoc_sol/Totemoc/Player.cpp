@@ -6,7 +6,8 @@ Player::Player() :
 	mWorldDest(0, 0),
 	mScreenPos(Sizes::PLAYER_SCR_POS),
 	mSpeed(3.0f),
-	mDir()
+	mDir(),
+	mOldDir(0.0f, 0.0f)
 	{
 	mSprite.setPosition(mScreenPos);
 	mSprite.setTexture(Resources::textures->get(Resources::TextureID::player));
@@ -17,18 +18,34 @@ void Player::update(sf::Time dt)
 	bool movKey = false;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
 		mDir = sf::Vector2f(-1.0f, 0.0f);
+		if (mOldDir != mDir){
+			mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerLeft));
+			mOldDir = mDir;
+			}
 		movKey = true;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
 		mDir = sf::Vector2f(1.0f, 0.0f);
+		if (mOldDir != mDir){
+			mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerRight));
+			mOldDir = mDir;
+		}
 		movKey = true;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
 		mDir = sf::Vector2f(0.0f, -1.0f);
+		if (mOldDir != mDir){
+			mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerBack));
+			mOldDir = mDir;
+		}
 		movKey = true;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
 		mDir = sf::Vector2f(0.0f, 1.0f);
+		if (mOldDir != mDir){
+			mSprite.setTexture(Resources::textures->get(Resources::TextureID::player));
+			mOldDir = mDir;
+		}
 		movKey = true;
 	}
 	if (!movKey){

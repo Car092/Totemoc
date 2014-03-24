@@ -7,7 +7,10 @@
 class Resources{
 public:
 	enum TextureID{
-		player
+		player,
+		playerRight,
+		playerLeft,
+		playerBack
 	};
 	enum FontID{
 		estre

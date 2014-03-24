@@ -13,6 +13,7 @@ private:
 	sf::Vector2f mWorldDest;
 	const sf::Vector2f mScreenPos;
 	sf::Vector2f mDir;
+	sf::Vector2f mOldDir;
 	float mSpeed;
 	sf::Sprite mSprite;
 public:

@@ -80,6 +80,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -89,6 +90,7 @@
     <ClCompile Include="Tilemap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="ResourceHolder.hpp" />
