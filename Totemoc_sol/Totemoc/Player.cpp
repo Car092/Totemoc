@@ -26,6 +26,19 @@ void Player::updateCurrent(sf::Time dt)
 		setVelocity(getVelocity() += sf::Vector2f(0.0f, 1.0f));
 	}
 
+	if (getVelocity().x == 0.0f && getVelocity().y == 1.0f){
+		mSprite.setTexture(Resources::textures->get(Resources::TextureID::player));
+	}
+	if (getVelocity().x == -1.0f && getVelocity().y == 0.0f){
+		mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerLeft));
+	}
+	if (getVelocity().x == 1.0f && getVelocity().y == 0.0f){
+		mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerRight));
+	}
+	if (getVelocity().x == 0.0f && getVelocity().y == -1.0f){
+		mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerBack));
+	}
+
 	move(getVelocity()*mSpeed*dt.asSeconds());
 }
 
