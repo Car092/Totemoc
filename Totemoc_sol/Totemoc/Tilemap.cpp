@@ -45,17 +45,18 @@ Tilemap::Tilemap()
 }
 
 void Tilemap::draw(sf::RenderWindow& window, float playerX, float playerY){
-	float offscreenCornerX = playerX - (Sizes::EXTRA_TILES_PER_SCREEN.x / 2);
-	float offscreenCornerY = playerY - (Sizes::EXTRA_TILES_PER_SCREEN.y / 2);
-	float screenCornerX = playerX - (Sizes::TILES_PER_SCREEN.x / 2);
-	float screenCornerY = playerY - (Sizes::TILES_PER_SCREEN.y / 2);
-	for (int i = 0; i < Sizes::EXTRA_TILES_PER_SCREEN.y; i++){
-		for (int j = 0; j < Sizes::EXTRA_TILES_PER_SCREEN.x; j++){
-			if (offscreenCornerX + j < 0 || offscreenCornerY + i < 0 ||
-				offscreenCornerX + j >(int)mMap[0].size() - 1 || offscreenCornerY + i >(int)mMap.size() - 1){
+	float offscreenCamX = playerX - (Sizes::EXTRA_TILES_PER_SCREEN.x / 2);
+	float offscreenCamY = playerY - (Sizes::EXTRA_TILES_PER_SCREEN.y / 2);
+	float camX = playerX - (Sizes::TILES_PER_SCREEN.x / 2);
+	float camY = playerY - (Sizes::TILES_PER_SCREEN.y / 2);
+	for (int j = 0; j < Sizes::EXTRA_TILES_PER_SCREEN.y; j++){
+		for (int i = 0; i < Sizes::EXTRA_TILES_PER_SCREEN.x; i++){
+			int tileX = (int)offscreenCamX + i;
+			int tileY = (int)offscreenCamY + j;
+			if (tileX < 0 || tileY < 0 || tileX >= (int)mMap[0].size() || tileY >= (int)mMap.size()){
 				continue;
 			}
-			mMap[(int)offscreenCornerY + i][(int)offscreenCornerX + j].draw(window, (int)offscreenCornerX + j, (int)offscreenCornerY + i, screenCornerX, screenCornerY);
+			mMap[tileY][tileX].draw(window, tileX, tileY, camX, camY);
 		}
 	}
 }
