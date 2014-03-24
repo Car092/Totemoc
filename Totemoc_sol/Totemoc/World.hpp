@@ -19,6 +19,7 @@ private:
 private:
 	sf::RenderWindow& mWindow;
 	SceneNode mSceneGraph;
+	Tilemap mTilemap;
 	Player* mPlayer;
 };
 

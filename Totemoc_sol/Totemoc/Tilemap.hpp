@@ -3,17 +3,15 @@
 
 #include "Tile.hpp"
 #include "SizeConstants.hpp"
-#include "SceneNode.hpp"
 
 class Player;
 
-class Tilemap : public SceneNode{
+class Tilemap {
 	private:
-		Player* mPlayer;
 		std::vector<std::vector<Tile>> mMap;
 	public:
-		Tilemap(Player* player);
-		void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+		Tilemap();
+		void draw(sf::RenderTarget& target, sf::Vector2f playerPos) const;
 };
 
 #endif //TOTEMOC_TILEMAP_HPP
