@@ -9,6 +9,7 @@ Resources::Resources(){
 	textures->load(Resources::TextureID::playerRight, "Resource Files/Old_Outfit_MaleRight.png");
 	textures->load(Resources::TextureID::playerLeft, "Resource Files/Old_Outfit_MaleLeft.png");
 	textures->load(Resources::TextureID::playerBack, "Resource Files/Old_Outfit_MaleBack.png");
+	textures->load(Resources::TextureID::grass, "Resource Files/grass.png");
 }
 
 Resources::~Resources(){

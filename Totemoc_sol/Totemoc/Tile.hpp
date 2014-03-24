@@ -6,8 +6,7 @@
 
 class Tile{
 	private:
-		sf::Color mColor;
-		sf::RectangleShape mShape;
+		sf::Sprite mSprite;
 	public:
 		Tile(int type);
 		void draw(sf::RenderTarget& target, int tileX, int tileY, float camX, float camY) const;
