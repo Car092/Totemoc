@@ -4,23 +4,19 @@
 #include <SFML/Graphics.hpp>
 #include "SizeConstants.hpp"
 #include "Resources.hpp"
+#include "Entity.hpp"
 
-class Player
+class Player : public Entity 
 {
-
 private:
-	sf::Vector2f mWorldPos;
-	sf::Vector2f mWorldDest;
 	const sf::Vector2f mScreenPos;
-	sf::Vector2f mDir;
-	sf::Vector2f mOldDir;
 	float mSpeed;
 	sf::Sprite mSprite;
+
 public:
 	Player();
-	void update(sf::Time dt);
-	sf::Vector2f getWorldPos();
-	void draw(sf::RenderWindow& window);
+	void updateCurrent(sf::Time dt);
+	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
 #endif //TOTEMOC_PLAYER_HPP

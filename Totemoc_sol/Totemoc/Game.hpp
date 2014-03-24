@@ -5,9 +5,8 @@
 #include <SFML/Audio.hpp>
 #include "SizeConstants.hpp"
 #include "TimeConstants.hpp"
-#include "Player.hpp"
-#include "Tilemap.hpp"
 #include "Statistics.hpp"
+#include "World.hpp"
 
 class Game {
 public:
@@ -16,9 +15,8 @@ public:
 
 private:
 	sf::RenderWindow mWindow;
-	Player mPlayer;
-	Tilemap mTilemap;
 	Statistics mStats;
+	World mWorld;
 
 	void processEvents();
 	void update();

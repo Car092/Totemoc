@@ -10,7 +10,7 @@ class Tile{
 		sf::RectangleShape mShape;
 	public:
 		Tile(int type);
-		void draw(sf::RenderWindow& window, int tileX, int tileY, float camX, float camY);
+		void draw(sf::RenderTarget& target, int tileX, int tileY, float camX, float camY) const;
 };
 
 #endif //TOTEMOC_TILE_HPP

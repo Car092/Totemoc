@@ -1,63 +1,35 @@
 #include "Player.hpp"
 
-Player::Player() : 
+Player::Player() : Entity(),
 	mSprite(),
-	mWorldPos(20, 15),
-	mWorldDest(0, 0),
 	mScreenPos(Sizes::PLAYER_SCR_POS),
-	mSpeed(3.0f),
-	mDir(),
-	mOldDir(0.0f, 0.0f)
-	{
+	mSpeed(3.0f)
+{
+	setPosition(20.0f, 15.0f);
 	mSprite.setPosition(mScreenPos);
 	mSprite.setTexture(Resources::textures->get(Resources::TextureID::player));
 }
 
-void Player::update(sf::Time dt)
+void Player::updateCurrent(sf::Time dt)
 {
-	bool movKey = false;
+	setVelocity(sf::Vector2f(0.0f, 0.0f));
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-		mDir = sf::Vector2f(-1.0f, 0.0f);
-		if (mOldDir != mDir){
-			mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerLeft));
-			mOldDir = mDir;
-			}
-		movKey = true;
+		setVelocity(getVelocity() += sf::Vector2f(-1.0f, 0.0f));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-		mDir = sf::Vector2f(1.0f, 0.0f);
-		if (mOldDir != mDir){
-			mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerRight));
-			mOldDir = mDir;
-		}
-		movKey = true;
+		setVelocity(getVelocity() += sf::Vector2f(1.0f, 0.0f));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-		mDir = sf::Vector2f(0.0f, -1.0f);
-		if (mOldDir != mDir){
-			mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerBack));
-			mOldDir = mDir;
-		}
-		movKey = true;
+		setVelocity(getVelocity() += sf::Vector2f(0.0f, -1.0f));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-		mDir = sf::Vector2f(0.0f, 1.0f);
-		if (mOldDir != mDir){
-			mSprite.setTexture(Resources::textures->get(Resources::TextureID::player));
-			mOldDir = mDir;
-		}
-		movKey = true;
+		setVelocity(getVelocity() += sf::Vector2f(0.0f, 1.0f));
 	}
-	if (!movKey){
-		mDir = sf::Vector2f(0.0f, 0.0f);
-	}
-	mWorldPos += mSpeed*mDir*dt.asSeconds();
+
+	move(getVelocity()*mSpeed*dt.asSeconds());
 }
 
-void Player::draw(sf::RenderWindow& window){
-	window.draw(mSprite);
-}
-
-sf::Vector2f Player::getWorldPos(){
-	return mWorldPos;
+void Player::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const{
+	states.transform = sf::Transform::Identity;
+	target.draw(mSprite, states);
 }

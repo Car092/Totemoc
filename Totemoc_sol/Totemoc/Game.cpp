@@ -2,9 +2,8 @@
 
 Game::Game() :
 mWindow(sf::VideoMode(Sizes::WINDOW_RESOLUTION.x, Sizes::WINDOW_RESOLUTION.y), "pTotemoc", sf::Style::Close), 
-mPlayer(), 
-mTilemap(),
-mStats()
+mStats(),
+mWorld(mWindow)
 {
 
 }
@@ -18,8 +17,8 @@ void Game::run(){
 		fixedStepTime += fixedStepClock.restart();
 		while (fixedStepTime > Times::TIME_P_FRAME){
 			fixedStepTime -= Times::TIME_P_FRAME;
-		processEvents();
-		update();
+			processEvents();
+			update();
 			mStats.updateLogic(clockLogic.restart());
 		}
 		render();
@@ -42,13 +41,12 @@ void Game::processEvents(){
 }
 
 void Game::update(){
-	mPlayer.update(Times::TIME_P_FRAME);
+	mWorld.update(Times::TIME_P_FRAME);
 }
 
 void Game::render(){
 	mWindow.clear();
-	mTilemap.draw(mWindow, mPlayer.getWorldPos().x, mPlayer.getWorldPos().y);
-	mPlayer.draw(mWindow);
+	mWorld.draw();
 	mStats.draw(mWindow);
 	mWindow.display();
 }
