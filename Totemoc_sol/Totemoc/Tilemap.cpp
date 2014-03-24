@@ -1,6 +1,8 @@
 #include "Tilemap.hpp"
+#include "Player.hpp"
 
-Tilemap::Tilemap()
+Tilemap::Tilemap(Player* player) : SceneNode(),
+mPlayer(player)
 {
 	std::vector<std::vector<int>> mapRaw = {
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -44,11 +46,11 @@ Tilemap::Tilemap()
 	}
 }
 
-void Tilemap::draw(sf::RenderWindow& window, float playerX, float playerY){
-	float offscreenCamX = playerX - (Sizes::EXTRA_TILES_PER_SCREEN.x / 2);
-	float offscreenCamY = playerY - (Sizes::EXTRA_TILES_PER_SCREEN.y / 2);
-	float camX = playerX - (Sizes::TILES_PER_SCREEN.x / 2);
-	float camY = playerY - (Sizes::TILES_PER_SCREEN.y / 2);
+void Tilemap::drawCurrent(sf::RenderTarget& window, sf::RenderStates states) const{
+	float offscreenCamX = mPlayer->getWorldPosition().x - (Sizes::EXTRA_TILES_PER_SCREEN.x / 2);
+	float offscreenCamY = mPlayer->getWorldPosition().y - (Sizes::EXTRA_TILES_PER_SCREEN.y / 2);
+	float camX = mPlayer->getWorldPosition().x - (Sizes::TILES_PER_SCREEN.x / 2);
+	float camY = mPlayer->getWorldPosition().y - (Sizes::TILES_PER_SCREEN.y / 2);
 	for (int j = 0; j < Sizes::EXTRA_TILES_PER_SCREEN.y; j++){
 		for (int i = 0; i < Sizes::EXTRA_TILES_PER_SCREEN.x; i++){
 			int tileX = (int)offscreenCamX + i;

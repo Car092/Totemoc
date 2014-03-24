@@ -21,10 +21,12 @@ Tile::Tile(int type){
 	mShape.setSize(sf::Vector2f((float)Sizes::TILE_SIZE.x, (float)Sizes::TILE_SIZE.y));
 }
 
-void Tile::draw(sf::RenderWindow& window, int tileX, int tileY, float camX, float camY){
+void Tile::draw(sf::RenderTarget& target, int tileX, int tileY, float camX, float camY) const {
 	sf::Vector2f screenPos;
 	screenPos.x = (float)(tileX - camX)*Sizes::TILE_SIZE.x;
 	screenPos.y = (float)(tileY - camY)*Sizes::TILE_SIZE.y;
-	mShape.setPosition(screenPos);
-	window.draw(mShape);
+	sf::RenderStates states;
+	sf::Transform transform;
+	states.transform = transform.translate(screenPos);
+	target.draw(mShape, states);
 }
