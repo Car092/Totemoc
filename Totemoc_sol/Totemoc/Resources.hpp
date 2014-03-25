@@ -11,7 +11,11 @@ public:
 		playerRight,
 		playerLeft,
 		playerBack,
-		grass
+		grass,
+		dirt,
+		water,
+		rock,
+		wood
 	};
 	enum FontID{
 		estre

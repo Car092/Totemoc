@@ -10,6 +10,10 @@ Resources::Resources(){
 	textures->load(Resources::TextureID::playerLeft, "Resource Files/Old_Outfit_MaleLeft.png");
 	textures->load(Resources::TextureID::playerBack, "Resource Files/Old_Outfit_MaleBack.png");
 	textures->load(Resources::TextureID::grass, "Resource Files/grass.png");
+	textures->load(Resources::TextureID::dirt, "Resource Files/dirt.png");
+	textures->load(Resources::TextureID::water, "Resource Files/water.png");
+	textures->load(Resources::TextureID::rock, "Resource Files/rock.png");
+	textures->load(Resources::TextureID::wood , "Resource Files/wood.png");
 }
 
 Resources::~Resources(){

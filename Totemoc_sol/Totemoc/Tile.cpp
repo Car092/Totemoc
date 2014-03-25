@@ -7,13 +7,16 @@ Tile::Tile(int type){
 			mSprite.setTexture(Resources::textures->get(Resources::TextureID::grass));
 			break;
 		case 1:
-
+			mSprite.setTexture(Resources::textures->get(Resources::dirt));
 			break;
 		case 2:
-
+			mSprite.setTexture(Resources::textures->get(Resources::rock));
 			break;
 		case 3:
-
+			mSprite.setTexture(Resources::textures->get(Resources::wood));
+			break;
+		case 4:
+			mSprite.setTexture(Resources::textures->get(Resources::water));
 			break;
 
 	}
