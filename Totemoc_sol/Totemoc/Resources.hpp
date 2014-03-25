@@ -15,7 +15,8 @@ public:
 		dirt,
 		water,
 		rock,
-		wood
+		wood,
+		wall
 	};
 	enum FontID{
 		estre

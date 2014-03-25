@@ -14,6 +14,7 @@ Resources::Resources(){
 	textures->load(Resources::TextureID::water, "Resource Files/water.png");
 	textures->load(Resources::TextureID::rock, "Resource Files/rock.png");
 	textures->load(Resources::TextureID::wood , "Resource Files/wood.png");
+	textures->load(Resources::TextureID::wall, "Resource Files/wall.png");
 }
 
 Resources::~Resources(){

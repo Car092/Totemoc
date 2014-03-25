@@ -18,6 +18,10 @@ Tile::Tile(int type){
 		case 4:
 			mSprite.setTexture(Resources::textures->get(Resources::water));
 			break;
+		case 5:
+			mSprite.setTexture(Resources::textures->get(Resources::wall));
+			mSprite.setOrigin(mSprite.getLocalBounds().width - 50.0f, mSprite.getLocalBounds().height - 50.0f);
+			break;
 
 	}
 }
