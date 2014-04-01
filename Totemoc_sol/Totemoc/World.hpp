@@ -14,11 +14,10 @@ public:
 	void draw();
 
 private:
-	void buildScene();
+	void initWorld();
 
 private:
 	sf::RenderWindow& mWindow;
-	SceneNode mSceneGraph;
 	Tilemap mTilemap;
 	Player* mPlayer;
 };

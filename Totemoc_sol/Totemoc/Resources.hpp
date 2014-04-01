@@ -16,7 +16,8 @@ public:
 		water,
 		rock,
 		wood,
-		wall
+		wall,
+		stoneWall
 	};
 	enum FontID{
 		estre

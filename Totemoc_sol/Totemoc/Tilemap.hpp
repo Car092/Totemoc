@@ -11,7 +11,11 @@ class Tilemap {
 		std::vector<std::vector<Tile>> mMap;
 	public:
 		Tilemap();
-		void draw(sf::RenderTarget& target, sf::Vector2f playerPos) const;
+		void loadMap(std::vector<std::vector<int>>& map);
+		void draw(sf::RenderTarget& target, sf::Vector2f playerPos);
+		void update(sf::Time dt, sf::Vector2f playerPos);
+		void updateMovingLayer(int tileX,int tileY);
+		Tile& getTile(int tileX, int tileY);
 };
 
 #endif //TOTEMOC_TILEMAP_HPP

@@ -10,7 +10,7 @@ Player::Player() : Entity(),
 	mSprite.setTexture(Resources::textures->get(Resources::TextureID::player));
 }
 
-void Player::updateCurrent(sf::Time dt)
+void Player::update(sf::Time dt)
 {
 	setVelocity(sf::Vector2f(0.0f, 0.0f));
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
@@ -38,11 +38,9 @@ void Player::updateCurrent(sf::Time dt)
 	if (getVelocity().x == 0.0f && getVelocity().y == -1.0f){
 		mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerBack));
 	}
-
 	move(getVelocity()*mSpeed*dt.asSeconds());
 }
 
-void Player::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const{
-	states.transform = sf::Transform::Identity;
-	target.draw(mSprite, states);
+void Player::draw(sf::RenderTarget& target){
+	target.draw(mSprite);
 }

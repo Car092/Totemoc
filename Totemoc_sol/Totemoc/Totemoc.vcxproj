@@ -83,6 +83,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Resources.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Animation.hpp" />
     <ClInclude Include="Game.hpp" />
+    <ClInclude Include="Item.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="ResourceHolder.hpp" />
     <ClInclude Include="Resources.hpp" />

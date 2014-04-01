@@ -15,8 +15,8 @@ private:
 
 public:
 	Player();
-	void updateCurrent(sf::Time dt);
-	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+	void update(sf::Time dt);
+	void draw(sf::RenderTarget& target);
 };
 
 #endif //TOTEMOC_PLAYER_HPP

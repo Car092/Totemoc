@@ -1,6 +1,10 @@
 #include "Entity.hpp"
 
-Entity::Entity() : SceneNode(){
+Entity::Entity() {
+
+}
+
+void Entity::draw(sf::RenderTarget& target){
 
 }
 
@@ -17,6 +21,6 @@ sf::Vector2f Entity::getVelocity(){
 	return mVelocity;
 }
 
-void Entity::updateCurrent(sf::Time dt){
+void Entity::update(sf::Time dt){
 	move(mVelocity * dt.asSeconds());
 }
