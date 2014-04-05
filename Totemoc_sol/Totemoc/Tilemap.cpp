@@ -56,13 +56,13 @@ void Tilemap::updateMovingLayer(int tileX, int tileY){
 	std::vector<Tile::EntityPtr> livingMoved;
 	mMap[tileY][tileX].dumpMoved(tileX, tileY, itemsMoved, livingMoved);
 	for (Tile::ItemPtr& item : itemsMoved){
-		int tileX = (int)item->getPosition().x;
-		int tileY = (int)item->getPosition().y;
-		mMap[tileY][tileX].pushItem(std::move(item));
+	int tileX = (int)item->getPosition().x;
+	int tileY = (int)item->getPosition().y;
+	mMap[tileY][tileX].pushItem(std::move(item));
 	}
 	for (Tile::EntityPtr& entity : livingMoved){
-		int tileX = (int)entity->getPosition().x;
-		int tileY = (int)entity->getPosition().y;
+	int tileX = (int)entity->getPosition().x;
+	int tileY = (int)entity->getPosition().y;
 		mMap[tileY][tileX].pushLiving(std::move(entity));
 	}
 }

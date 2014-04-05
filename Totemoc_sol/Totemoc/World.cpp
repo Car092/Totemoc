@@ -8,8 +8,8 @@ mPlayer(nullptr)
 	std::unique_ptr<Player> player(new Player);
 	mPlayer = player.get();
 	initWorld();
-	mTilemap.getTile(5, 5).pushLiving(std::move(player));
-	mPlayer->setPosition(5, 5);
+	mTilemap.getTile(20, 20).pushLiving(std::move(player));
+	mPlayer->setPosition(20, 20);
 }
 
 void World::draw(){
