@@ -15,21 +15,6 @@ mActiveTiles()
 	mPlayer->setPosition(20, 20);
 }
 
-void World::draw(){
-	float activeZoneX = mPlayer->getPosition().x - (float)Sizes::TILES_PER_SCREEN.x / 2;
-	float activeZoneY = mPlayer->getPosition().y - (float)Sizes::TILES_PER_SCREEN.y / 2;
-	mSceneGraph.draw(mWindow, sf::Vector2f(activeZoneX, activeZoneY));
-}
-
-void World::update(sf::Time dt){
-	mSceneGraph.update(dt);
-	if (mTimeSinceRefresh.getElapsedTime() > sf::seconds(1.0f)){
-		refreshTiles();
-		refreshScene();
-		mTimeSinceRefresh.restart();
-	}
-}
-
 void World::initWorld(){
 	std::vector<std::vector<int>> map = {
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -75,20 +60,35 @@ void World::initScene(){
 	mSceneGraph.attachChild(&mTallTileLayer);
 }
 
+void World::draw(){
+	float activeZoneX = mPlayer->getPosition().x - (float)Sizes::TILES_PER_SCREEN.x / 2;
+	float activeZoneY = mPlayer->getPosition().y - (float)Sizes::TILES_PER_SCREEN.y / 2;
+	mSceneGraph.draw(mWindow, sf::Vector2f(activeZoneX, activeZoneY));
+}
+
+void World::update(sf::Time dt){
+	mSceneGraph.update(dt);
+	if (mTimeSinceRefresh.getElapsedTime() > sf::seconds(0.3f)){
+		refreshTiles();
+		refreshScene();
+		mTimeSinceRefresh.restart();
+	}
+}
+
 void World::refreshTiles(){
 	mTilemap.refreshTiles(mPlayer->getPosition());
 }
 
 void World::refreshScene(){
+	auto it = mActiveTiles.begin();
+	while (it != mActiveTiles.end()){
+		deactivateTile(it);
+	}
 	std::vector<Tile::SpritePtr> floorTiles;
 	std::vector<Tile::EntityPtr> items;
 	std::vector<Tile::EntityPtr> living;
 	std::vector<Tile::SpritePtr> tallTiles;
 	mTilemap.forEach_In_ActiveZone(mPlayer->getPosition(), [&](Tile& tile, int tileX, int tileY){activateTile(&tile); });
-	auto it = mActiveTiles.begin();
-	while (it != mActiveTiles.end()){
-		deactivateTile(it);
-	}
 }
 
 void World::activateTile(Tile* tile){
