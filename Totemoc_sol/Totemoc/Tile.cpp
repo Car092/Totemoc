@@ -3,81 +3,68 @@
 #include "Resources.hpp"
 
 Tile::Tile(int type) : mItems(), mLiving(){
-	switch (type){
-		case 0:
-			mFloorSprite.setTexture(Resources::textures->get(Resources::grass));
-			break;
-		case 1:
-			mFloorSprite.setTexture(Resources::textures->get(Resources::dirt));
-			break;
-		case 2:
-			mFloorSprite.setTexture(Resources::textures->get(Resources::rock));
-			break;
-		case 3:
-			mFloorSprite.setTexture(Resources::textures->get(Resources::wood));
-			break;
-		case 4:
-			mFloorSprite.setTexture(Resources::textures->get(Resources::water));
-			break;
-	}
+	mFloorSprite = SpritePtr(new SpriteNode(type));
+	mTallSprite = SpritePtr(new SpriteNode(10));
 }
 
 Tile::Tile(Tile&& tile) : 
-mFloorSprite(tile.mFloorSprite),
+mPosition(tile.mPosition),
+mFloorSprite(std::move(tile.mFloorSprite)),
 mItems(std::move(tile.mItems)),       
 mLiving(std::move(tile.mLiving)),
-mTallSprite(tile.mTallSprite)
+mTallSprite(std::move(tile.mTallSprite))
 {
 }
 
-void Tile::draw(sf::RenderTarget& target, int tileX, int tileY, float camX, float camY){
-	sf::Vector2f screenPos;
-	screenPos.x = (float)(tileX - camX)*Sizes::TILE_SIZE.x;
-	screenPos.y = (float)(tileY - camY)*Sizes::TILE_SIZE.y;
-	sf::RenderStates states;
-	sf::Transform transform;
-	states.transform = transform.translate(screenPos);
-	target.draw(mFloorSprite, states);
-
-	for (ItemPtr& item : mItems){
-		item->draw(target);
-	}
-	for (EntityPtr& entity : mLiving){
-		std::cout << "Tile: " << tileX << ", " << tileY << " Player pos: " << entity->getPosition().x << ", " << entity->getPosition().y << std::endl;
-		entity->draw(target);
-	}
-
-	target.draw(mTallSprite, states);
-}
-
-void Tile::update(sf::Time dt){
-	for (EntityPtr& entity : mLiving){
-		entity->update(dt);
-	}
-}
-
-void Tile::dumpMoved(int tileX, int tileY, std::vector<ItemPtr>& itemsOut, std::vector<EntityPtr>& entitiesOut){
+void Tile::dumpMoved(int tileX, int tileY, std::vector<EntityPtr>& itemsOut, std::vector<EntityPtr>& livingOut){
 	sf::FloatRect tileRect((float)tileX, (float)tileY, 1.0f, 1.0f);
-	for (auto it = mItems.begin(); it != mItems.end(); it++){
+	for (auto it = mItems.begin(); it != mItems.end(); ){
 		if (!tileRect.contains((*it)->getPosition())){
 			itemsOut.push_back(std::move(*it));
 			it = mItems.erase(it);
-			if (it == mItems.end()) break;
+		}
+		else{
+			it++;
 		}
 	}
-	for (auto it = mLiving.begin(); it != mLiving.end(); it++){
+	for (auto it = mLiving.begin(); it != mLiving.end(); ){
 		if (!tileRect.contains((*it)->getPosition())){
-			entitiesOut.push_back(std::move(*it));
+			livingOut.push_back(std::move(*it));
 			it = mLiving.erase(it);
-			if (it == mLiving.end()) break;
+		}
+		else{
+			it++;
 		}
 	}
 }
 
-void Tile::pushItem(ItemPtr itemIn){
+void Tile::pushItem(EntityPtr itemIn){
 	mItems.push_back(std::move(itemIn));
 }
 
 void Tile::pushLiving(EntityPtr entityIn){
 	mLiving.push_back(std::move(entityIn));
+}
+
+void Tile::packInVectors(SpriteNode*& floorTile, std::vector<Entity*>& items,
+	                     std::vector<Entity*>& living, SpriteNode*& tallTile)
+{
+	floorTile = mFloorSprite.get();
+	for (EntityPtr& item : mItems){
+		items.push_back(item.get());
+	}
+	for (EntityPtr& livingElem : mLiving){
+		living.push_back(livingElem.get());
+	}
+	tallTile = mTallSprite.get();
+}
+
+void Tile::setPosition(sf::Vector2i pos){
+	mPosition = pos;
+	mFloorSprite->setPosition((float)pos.x, (float)pos.y);
+	mTallSprite->setPosition((float)pos.x, (float)pos.y);
+}
+
+const sf::Vector2i& Tile::getPosition(){
+	return mPosition;
 }

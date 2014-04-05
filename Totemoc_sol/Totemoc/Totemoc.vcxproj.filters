@@ -51,6 +51,9 @@
     <ClCompile Include="Item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SpriteNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.hpp">
@@ -95,9 +98,15 @@
     <ClInclude Include="Item.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteNode.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ResourceHolder.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Tilemap.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

@@ -27,7 +27,7 @@ void Game::run(){
 		float leftOver = Times::TIME_P_FRAME.asSeconds() - fixedStepClock.getElapsedTime().asSeconds();
 		if (leftOver > 0)
 		{
-			sf::sleep(sf::seconds(leftOver*0.5f));
+//			sf::sleep(sf::seconds(leftOver*0.5f));
 		}
 	}
 }

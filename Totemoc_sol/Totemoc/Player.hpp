@@ -15,8 +15,8 @@ private:
 
 public:
 	Player();
-	void update(sf::Time dt);
-	void draw(sf::RenderTarget& target);
+	void updateCurrent(const sf::Time& dt);
+	void drawCurrent(sf::RenderTarget& target, sf::Vector2f camera) const;
 };
 
 #endif //TOTEMOC_PLAYER_HPP

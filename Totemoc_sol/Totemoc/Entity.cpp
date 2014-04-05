@@ -4,9 +4,6 @@ Entity::Entity() {
 
 }
 
-void Entity::draw(sf::RenderTarget& target){
-
-}
 
 void Entity::setVelocity(sf::Vector2f velocity){
 	mVelocity = velocity;
