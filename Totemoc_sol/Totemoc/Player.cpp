@@ -10,7 +10,7 @@ Player::Player() : Entity(),
 	mSprite.setTexture(Resources::textures->get(Resources::TextureID::player));
 }
 
-void Player::update(sf::Time dt)
+void Player::updateCurrent(const sf::Time& dt)
 {
 	setVelocity(sf::Vector2f(0.0f, 0.0f));
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
@@ -41,6 +41,6 @@ void Player::update(sf::Time dt)
 	move(getVelocity()*mSpeed*dt.asSeconds());
 }
 
-void Player::draw(sf::RenderTarget& target){
+void Player::drawCurrent(sf::RenderTarget& target, sf::Vector2f camera) const{
 	target.draw(mSprite);
 }
