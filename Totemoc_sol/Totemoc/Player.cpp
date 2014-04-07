@@ -38,6 +38,18 @@ void Player::updateCurrent(const sf::Time& dt)
 	if (getVelocity().x == 0.0f && getVelocity().y == -1.0f){
 		mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerBack));
 	}
+	if (getVelocity().x == -1.0f && getVelocity().y == -1.0f){
+		mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerBL));
+	}
+	if (getVelocity().x == 1.0f && getVelocity().y == -1.0f){
+		mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerBR));
+	}
+	if (getVelocity().x == -1.0f && getVelocity().y == 1.0f){
+		mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerFL));
+	}
+	if (getVelocity().x == 1.0f && getVelocity().y == 1.0f){
+		mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerFR));
+	}
 	move(getVelocity()*mSpeed*dt.asSeconds());
 }
 

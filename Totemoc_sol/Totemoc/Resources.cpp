@@ -9,6 +9,10 @@ Resources::Resources(){
 	textures->load(Resources::TextureID::playerRight, "Resource Files/charDer.png");
 	textures->load(Resources::TextureID::playerLeft, "Resource Files/charIzq.png");
 	textures->load(Resources::TextureID::playerBack, "Resource Files/charAtras.png");
+	textures->load(Resources::TextureID::playerFR, "Resource Files/charEnfDer.png");
+	textures->load(Resources::TextureID::playerFL, "Resource Files/charEnfIzq.png");
+	textures->load(Resources::TextureID::playerBR, "Resource Files/charAtrasDer.png");
+	textures->load(Resources::TextureID::playerBL, "Resource Files/charAtrasIzq.png");
 	textures->load(Resources::TextureID::grass, "Resource Files/grass.png");
 	textures->load(Resources::TextureID::dirt, "Resource Files/dirt.png");
 	textures->load(Resources::TextureID::water, "Resource Files/water.png");
