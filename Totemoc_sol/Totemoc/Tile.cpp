@@ -46,17 +46,17 @@ void Tile::pushLiving(EntityPtr entityIn){
 	mLiving.push_back(std::move(entityIn));
 }
 
-void Tile::packInVectors(SpriteNode*& floorTile, std::vector<Entity*>& items,
-	                     std::vector<Entity*>& living, SpriteNode*& tallTile)
+void Tile::packInVectors(std::vector<SpriteNode*>& floorTiles, std::vector<Entity*>& items,
+	                     std::vector<Entity*>& living, std::vector<SpriteNode*>& tallTiles)
 {
-	floorTile = mFloorSprite.get();
+	floorTiles.push_back(mFloorSprite.get());
 	for (EntityPtr& item : mItems){
 		items.push_back(item.get());
 	}
 	for (EntityPtr& livingElem : mLiving){
 		living.push_back(livingElem.get());
 	}
-	tallTile = mTallSprite.get();
+	tallTiles.push_back(mTallSprite.get());
 }
 
 void Tile::setPosition(sf::Vector2i pos){
@@ -67,4 +67,12 @@ void Tile::setPosition(sf::Vector2i pos){
 
 const sf::Vector2i& Tile::getPosition(){
 	return mPosition;
+}
+
+Tile& Tile::operator=(Tile&& tile){
+	mFloorSprite = std::move(tile.mFloorSprite);
+	mItems = std::move(tile.mItems);
+	mLiving = std::move(tile.mLiving);
+	mTallSprite = std::move(tile.mTallSprite);
+	return *this;
 }

@@ -23,9 +23,12 @@ private:
 	void initWorld();
 	void initScene();
 	void refreshTiles();
-	void refreshScene();
-	void activateTile(Tile* tile);
-	void deactivateTile(std::vector<Tile*>::iterator& tileIter);
+	void activateTiles();
+	void activateTile(Tile* tile, std::vector<SpriteNode*>& floorTiles,
+		std::vector<Entity*>& items, std::vector<Entity*>& living, std::vector<SpriteNode*>& tallTiles);
+	void deactivateTiles();
+	void deactivateTile(std::vector<Tile*>::iterator& tileIter, std::vector<SpriteNode*>& floorTiles,
+		std::vector<Entity*>& items, std::vector<Entity*>& living, std::vector<SpriteNode*>& tallTiles, const sf::FloatRect& activeZone);
 
 private:
 	sf::RenderWindow& mWindow;
@@ -37,7 +40,7 @@ private:
 	SceneNode mTallTileLayer;
 	std::vector<Tile*> mActiveTiles;
 	Player* mPlayer;
-	sf::Clock mTimeSinceRefresh;
+	sf::Clock mTimeSinceActivate;
 };
 
 #endif //TOTEMOC_WORLD_HPP

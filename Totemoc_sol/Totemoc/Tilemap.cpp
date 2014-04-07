@@ -23,12 +23,14 @@ void Tilemap::refreshTiles(const sf::Vector2f& playerPos){
 	std::vector<Tile::EntityPtr> livingMoved;
 	forEach_In_ActiveZone(playerPos, [&](Tile& tile, int tileX, int tileY){tile.dumpMoved(tileX, tileY, itemsMoved, livingMoved);});
 	for (Tile::EntityPtr& item : itemsMoved){
-		mMap[(int)item->getPosition().y][(int)item->getPosition().x].pushItem(std::move(item));
+		int tileX = (int)item->getPosition().x;
+		int tileY = (int)item->getPosition().y;
+		mMap[tileX][tileY].pushItem(std::move(item));
 	}
-	for (auto it = livingMoved.begin(); it != livingMoved.end(); it++){
-		int tileX = (int)(*it)->getPosition().x;
-		int tileY = (int)(*it)->getPosition().y;
-		mMap[tileY][tileX].pushLiving(std::move(*it));
+	for (Tile::EntityPtr& livingElem : livingMoved){
+		int tileX = (int)livingElem->getPosition().x;
+		int tileY = (int)livingElem->getPosition().y;
+		mMap[tileY][tileX].pushLiving(std::move(livingElem));
 	}
 }
 
