@@ -2,7 +2,7 @@
 #define TOTEMOC_SCENENODE_HPP
 
 #include <memory>
-#include <list>
+#include <vector>
 #include <SFML\Graphics.hpp>
 
 class SceneNode : public sf::Transformable, private sf::NonCopyable{
@@ -21,7 +21,7 @@ class SceneNode : public sf::Transformable, private sf::NonCopyable{
 		virtual void drawCurrent(sf::RenderTarget& target, sf::Vector2f camera) const;
 		
 	private:
-		std::list<SceneNode*> mChildren;
+		std::vector<SceneNode*> mChildren;
 		SceneNode* mParent;
 };
 

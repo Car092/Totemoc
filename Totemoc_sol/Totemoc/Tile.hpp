@@ -12,7 +12,7 @@ public:
 	typedef std::unique_ptr<Entity> EntityPtr;
 	typedef std::unique_ptr<SpriteNode> SpritePtr;
 
-private:
+public:
 	sf::Vector2i mPosition;
 	SpritePtr mFloorSprite;
 	std::vector<EntityPtr> mItems;
@@ -27,8 +27,9 @@ public:
 	void dumpMoved(int tileX, int tileY, std::vector<EntityPtr>& itemsOut, std::vector<EntityPtr>& entitiesOut);
 	void pushItem(EntityPtr itemIn);
 	void pushLiving(EntityPtr entityIn);
-	void packInVectors(SpriteNode*& floorTiles, std::vector<Entity*>& items,
-		std::vector<Entity*>& living, SpriteNode*& tallTiles);
+	void packInVectors(std::vector<SpriteNode*>& floorTiles, std::vector<Entity*>& items,
+		std::vector<Entity*>& living, std::vector<SpriteNode*>& tallTiles);
+	Tile& operator=(Tile&& tile);
 };
 
 #endif //TOTEMOC_TILE_HPP

@@ -18,6 +18,12 @@ SpriteNode::SpriteNode(int type){
 		case 4:
 			mSprite.setTexture(Resources::textures->get(Resources::water));
 			break;
+		case 5:
+			mSprite.setTexture(Resources::textures->get(Resources::wall));
+			break;
+		case 6:
+			mSprite.setTexture(Resources::textures->get(Resources::stoneWall));
+			break;
 	}
 }
 

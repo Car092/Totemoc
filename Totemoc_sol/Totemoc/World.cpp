@@ -13,6 +13,9 @@ mActiveTiles()
 	initScene();
 	mTilemap.getTile(20, 20).pushLiving(std::move(player));
 	mPlayer->setPosition(20, 20);
+	mTilemap.getTile(21, 21).mTallSprite = std::unique_ptr<SpriteNode>(new SpriteNode(5));
+	mTilemap.getTile(22, 21).mTallSprite = std::unique_ptr<SpriteNode>(new SpriteNode(5));
+	mTilemap.getTile(20, 20).mTallSprite = std::unique_ptr<SpriteNode>(new SpriteNode(6));
 }
 
 void World::initWorld(){
@@ -68,10 +71,11 @@ void World::draw(){
 
 void World::update(sf::Time dt){
 	mSceneGraph.update(dt);
-	if (mTimeSinceRefresh.getElapsedTime() > sf::seconds(0.3f)){
+	if (mTimeSinceActivate.getElapsedTime() > sf::seconds(0.3f)){
 		refreshTiles();
-		refreshScene();
-		mTimeSinceRefresh.restart();
+		deactivateTiles();
+		activateTiles();
+		mTimeSinceActivate.restart();
 	}
 }
 
@@ -79,19 +83,66 @@ void World::refreshTiles(){
 	mTilemap.refreshTiles(mPlayer->getPosition());
 }
 
-void World::refreshScene(){
+void World::deactivateTiles(){
+	float activeZoneX = mPlayer->getPosition().x - (Sizes::EXTRA_TILES_PER_SCREEN.x / 2);
+	float activeZoneY = mPlayer->getPosition().y - (Sizes::EXTRA_TILES_PER_SCREEN.y / 2);
+	sf::FloatRect activeZone(sf::Vector2f(activeZoneX, activeZoneY), sf::Vector2f((float)Sizes::EXTRA_TILES_PER_SCREEN.x, (float)Sizes::EXTRA_TILES_PER_SCREEN.y));
+	std::vector<SpriteNode*> floorTilesPtrs;
+	std::vector<Entity*> itemsPtrs;
+	std::vector<Entity*> livingPtrs;
+	std::vector<SpriteNode*> tallTilesPtrs;
 	auto it = mActiveTiles.begin();
 	while (it != mActiveTiles.end()){
-		deactivateTile(it);
+		deactivateTile(it, floorTilesPtrs, itemsPtrs, livingPtrs, tallTilesPtrs, activeZone);
 	}
-	std::vector<Tile::SpritePtr> floorTiles;
-	std::vector<Tile::EntityPtr> items;
-	std::vector<Tile::EntityPtr> living;
-	std::vector<Tile::SpritePtr> tallTiles;
-	mTilemap.forEach_In_ActiveZone(mPlayer->getPosition(), [&](Tile& tile, int tileX, int tileY){activateTile(&tile); });
+	for (SpriteNode* floorTile : floorTilesPtrs){
+		mFloorTileLayer.detachLeaf(floorTile);
+	}
+	for (Entity* item : itemsPtrs){
+		mItemLayer.detachLeaf(item);
+	}
+	for (Entity* livingElem : livingPtrs){
+		mLivingLayer.detachLeaf(livingElem);
+	}
+	for (SpriteNode* tallTile : tallTilesPtrs){
+		mTallTileLayer.detachLeaf(tallTile);
+	}
+}
+void World::activateTiles(){
+	std::vector<SpriteNode*> floorTilesPtrs;
+	std::vector<Entity*> itemsPtrs;
+	std::vector<Entity*> livingPtrs;
+	std::vector<SpriteNode*> tallTilesPtrs;
+	mTilemap.forEach_In_ActiveZone(mPlayer->getPosition(), [&](Tile& tile, int tileX, int tileY){
+		activateTile(&tile, floorTilesPtrs, itemsPtrs, livingPtrs, tallTilesPtrs); 
+	});
+	for (SpriteNode* floorTile : floorTilesPtrs){
+		mFloorTileLayer.attachChild(floorTile);
+	}
+	for (Entity* item : itemsPtrs){
+		mItemLayer.attachChild(item);
+	}
+	for (Entity* livingElem : livingPtrs){
+		mLivingLayer.attachChild(livingElem);
+	}
+	for (SpriteNode* tallTile : tallTilesPtrs){
+		mTallTileLayer.attachChild(tallTile);
+	}
 }
 
-void World::activateTile(Tile* tile){
+void World::deactivateTile(std::vector<Tile*>::iterator& tileIter, std::vector<SpriteNode*>& floorTiles,
+	std::vector<Entity*>& items, std::vector<Entity*>& living, std::vector<SpriteNode*>& tallTiles, const sf::FloatRect& activeZone){
+	if (!activeZone.contains((float)(*tileIter)->getPosition().x, (float)(*tileIter)->getPosition().y)){
+		(*tileIter)->packInVectors(floorTiles, items, living, tallTiles);
+		tileIter = mActiveTiles.erase(tileIter);
+	}
+	else{
+		tileIter++;
+	}
+}
+
+void World::activateTile(Tile* tile, std::vector<SpriteNode*>& floorTiles,
+	std::vector<Entity*>& items, std::vector<Entity*>& living, std::vector<SpriteNode*>& tallTiles){
 	bool found = false;
 	for (auto it = mActiveTiles.begin(); it != mActiveTiles.end(); it++){
 		if (tile->getPosition() == (*it)->getPosition()){
@@ -100,43 +151,7 @@ void World::activateTile(Tile* tile){
 	}
 	if (!found){
 		mActiveTiles.push_back(tile);
-		SpriteNode* floorTile;
-		std::vector<Entity*> items;
-		std::vector<Entity*> living;
-		SpriteNode* tallTile;
-		tile->packInVectors(floorTile, items, living, tallTile);
-		mFloorTileLayer.attachChild(floorTile);
-		for (Entity* item : items){
-			mItemLayer.attachChild(item);
-		}
-		for (Entity* livingElem : living){
-			mLivingLayer.attachChild(livingElem);
-		}
-		mTallTileLayer.attachChild(tallTile);
+		tile->packInVectors(floorTiles, items, living, tallTiles);
 	}
 }
 
-void World::deactivateTile(std::vector<Tile*>::iterator& tileIter){
-	float activeZoneX = mPlayer->getPosition().x - (Sizes::EXTRA_TILES_PER_SCREEN.x / 2);
-	float activeZoneY = mPlayer->getPosition().y - (Sizes::EXTRA_TILES_PER_SCREEN.y / 2);
-	sf::FloatRect activeZone(sf::Vector2f(activeZoneX, activeZoneY), sf::Vector2f((float)Sizes::EXTRA_TILES_PER_SCREEN.x, (float)Sizes::EXTRA_TILES_PER_SCREEN.y));
-	if (!activeZone.contains((float)(*tileIter)->getPosition().x, (float)(*tileIter)->getPosition().y)){
-		SpriteNode* floorTile;
-		std::vector<Entity*> items;
-		std::vector<Entity*> living;
-		SpriteNode* tallTile;
-		(*tileIter)->packInVectors(floorTile, items, living, tallTile);
-		mFloorTileLayer.detachLeaf(floorTile);
-		for (Entity* item : items){
-			mItemLayer.detachLeaf(item);
-		}
-		for (Entity* livingElem : living){
-			mLivingLayer.detachLeaf(livingElem);
-		}
-		mTallTileLayer.detachLeaf(tallTile);
-		tileIter = mActiveTiles.erase(tileIter);
-	}
-	else{
-		tileIter++;
-	}
-}
