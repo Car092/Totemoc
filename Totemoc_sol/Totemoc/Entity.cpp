@@ -17,7 +17,3 @@ void Entity::setVelocity(float vx, float vy){
 sf::Vector2f Entity::getVelocity(){
 	return mVelocity;
 }
-
-void Entity::update(sf::Time dt){
-	move(mVelocity * dt.asSeconds());
-}

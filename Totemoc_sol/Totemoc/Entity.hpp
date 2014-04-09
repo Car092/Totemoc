@@ -10,7 +10,6 @@ class Entity : public SceneNode{
 		void setVelocity(sf::Vector2f velocity);
 		void setVelocity(float vx, float vy);
 		sf::Vector2f getVelocity();
-		virtual void update(sf::Time dt);
 
 	private:
 		sf::Vector2f mVelocity;

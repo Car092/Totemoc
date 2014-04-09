@@ -5,10 +5,10 @@ ResourceHolder<sf::Font, Resources::FontID>* Resources::fonts = new ResourceHold
 
 Resources::Resources(){
 	fonts->load(Resources::FontID::estre, "Resource Files/estre.ttf");
-	textures->load(Resources::TextureID::player, "Resource Files/char.png");
-	textures->load(Resources::TextureID::playerRight, "Resource Files/charDer.png");
-	textures->load(Resources::TextureID::playerLeft, "Resource Files/charIzq.png");
-	textures->load(Resources::TextureID::playerBack, "Resource Files/charAtras.png");
+	textures->load(Resources::TextureID::player, "Resource Files/tib.png");
+	textures->load(Resources::TextureID::playerRight, "Resource Files/tib_right.png");
+	textures->load(Resources::TextureID::playerLeft, "Resource Files/tib_left.png");
+	textures->load(Resources::TextureID::playerBack, "Resource Files/tib_up.png");
 	textures->load(Resources::TextureID::playerFR, "Resource Files/charEnfDer.png");
 	textures->load(Resources::TextureID::playerFL, "Resource Files/charEnfIzq.png");
 	textures->load(Resources::TextureID::playerBR, "Resource Files/charAtrasDer.png");

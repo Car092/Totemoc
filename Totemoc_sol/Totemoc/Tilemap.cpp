@@ -21,7 +21,8 @@ void Tilemap::loadMap(std::vector<std::vector<int>>& map)
 void Tilemap::refreshTiles(const sf::Vector2f& playerPos){
 	std::vector<Tile::EntityPtr> itemsMoved;
 	std::vector<Tile::EntityPtr> livingMoved;
-	forEach_In_ActiveZone(playerPos, [&](Tile& tile, int tileX, int tileY){tile.dumpMoved(tileX, tileY, itemsMoved, livingMoved);});
+	forEach_In_Zone(playerPos, sf::Vector2i(Sizes::EXTRA_TILES_PER_SCREEN.x, Sizes::EXTRA_TILES_PER_SCREEN.x),
+		[&](Tile& tile, int tileX, int tileY){tile.dumpMoved(tileX, tileY, itemsMoved, livingMoved); });
 	for (Tile::EntityPtr& item : itemsMoved){
 		int tileX = (int)item->getPosition().x;
 		int tileY = (int)item->getPosition().y;

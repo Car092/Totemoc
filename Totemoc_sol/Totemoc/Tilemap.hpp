@@ -15,7 +15,7 @@ class Tilemap {
 		void refreshTiles(const sf::Vector2f& playerPos);
 		Tile& getTile(int tileX, int tileY);
 		template<typename Func>
-		void forEach_In_ActiveZone(const sf::Vector2f& playerPos, Func funcToDo);
+		void forEach_In_Zone(const sf::Vector2f& center, const sf::Vector2i& size, Func funcToDo);
 };
 
 #include "Tilemap.inl"

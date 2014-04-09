@@ -13,9 +13,20 @@ mActiveTiles()
 	initScene();
 	mTilemap.getTile(20, 20).pushLiving(std::move(player));
 	mPlayer->setPosition(20, 20);
-	mTilemap.getTile(21, 21).mTallSprite = std::unique_ptr<SpriteNode>(new SpriteNode(5));
-	mTilemap.getTile(22, 21).mTallSprite = std::unique_ptr<SpriteNode>(new SpriteNode(5));
-	mTilemap.getTile(20, 20).mTallSprite = std::unique_ptr<SpriteNode>(new SpriteNode(6));
+
+	mTilemap.getTile(21, 25).mTallSprite = std::unique_ptr<SpriteNode>(new SpriteNode(5));
+	mTilemap.getTile(21, 25).mTallSprite->setPosition(21.0f, 25.0f);
+	mTilemap.getTile(21, 25).mTallSprite->setColRect(sf::Vector2f(1.0f, 1.0f));
+	mTilemap.getTile(21, 25).mTallSprite->setColType(SceneNode::ColType::unwalkable);
+
+	mTilemap.getTile(21, 20).mTallSprite = std::unique_ptr<SpriteNode>(new SpriteNode(6));
+	mTilemap.getTile(21, 20).mTallSprite->setPosition(21.0f, 20.0f);
+
+	mTilemap.getTile(22, 20).mTallSprite = std::unique_ptr<SpriteNode>(new SpriteNode(6));
+	mTilemap.getTile(22, 20).mTallSprite->setPosition(22.0f, 20.0f);
+
+	mTilemap.getTile(23, 20).mTallSprite = std::unique_ptr<SpriteNode>(new SpriteNode(6));
+	mTilemap.getTile(23, 20).mTallSprite->setPosition(23.0f, 20.0f);
 }
 
 void World::initWorld(){
@@ -39,9 +50,9 @@ void World::initWorld(){
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 4, 4, 4, 4, 4 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 0, 4, 4, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 4, 4, 4, 4, 4 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 4, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0 },
@@ -70,7 +81,7 @@ void World::draw(){
 }
 
 void World::update(sf::Time dt){
-	mSceneGraph.update(dt);
+	mSceneGraph.update(dt, &mTilemap);
 	if (mTimeSinceActivate.getElapsedTime() > sf::seconds(0.3f)){
 		refreshTiles();
 		deactivateTiles();
@@ -113,7 +124,8 @@ void World::activateTiles(){
 	std::vector<Entity*> itemsPtrs;
 	std::vector<Entity*> livingPtrs;
 	std::vector<SpriteNode*> tallTilesPtrs;
-	mTilemap.forEach_In_ActiveZone(mPlayer->getPosition(), [&](Tile& tile, int tileX, int tileY){
+	mTilemap.forEach_In_Zone(mPlayer->getPosition(), sf::Vector2i(Sizes::EXTRA_TILES_PER_SCREEN.x, Sizes::EXTRA_TILES_PER_SCREEN.x),
+		[&](Tile& tile, int tileX, int tileY){
 		activateTile(&tile, floorTilesPtrs, itemsPtrs, livingPtrs, tallTilesPtrs); 
 	});
 	for (SpriteNode* floorTile : floorTilesPtrs){

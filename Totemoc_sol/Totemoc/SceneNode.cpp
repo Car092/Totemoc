@@ -36,17 +36,39 @@ void SceneNode::drawChildren(sf::RenderTarget& target, sf::Vector2f camera) cons
 	}
 }
 
-void SceneNode::update(const sf::Time& dt){
-	updateCurrent(dt);
-	updateChildren(dt);
+void SceneNode::update(const sf::Time& dt, Tilemap* tilemap){
+	updateCurrent(dt, tilemap);
+	updateChildren(dt, tilemap);
 }
 
-void SceneNode::updateCurrent(const sf::Time& dt){
+void SceneNode::updateCurrent(const sf::Time& dt, Tilemap* tilemap){
 
 }
 
-void SceneNode::updateChildren(const sf::Time& dt){
+void SceneNode::updateChildren(const sf::Time& dt, Tilemap* tilemap){
 	for (SceneNode* child : mChildren){
-		child->update(dt);
+		child->update(dt, tilemap);
 	}
+}
+
+void SceneNode::setColRect(sf::Vector2f size, sf::Vector2f posRel){
+	mColRect = sf::FloatRect(posRel, size);
+}
+
+const sf::FloatRect& SceneNode::getColRect(){
+	mColRect.left = getPosition().x;
+	mColRect.top = getPosition().y;
+	return mColRect;
+}
+
+void SceneNode::checkCollisions(Tilemap* tilemap){
+
+}
+
+SceneNode::ColType SceneNode::getColType(){
+	return mColType;
+}
+
+void SceneNode::setColType(SceneNode::ColType colType){
+	mColType = colType;
 }

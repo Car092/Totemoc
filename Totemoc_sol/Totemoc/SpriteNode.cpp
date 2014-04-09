@@ -20,9 +20,11 @@ SpriteNode::SpriteNode(int type){
 			break;
 		case 5:
 			mSprite.setTexture(Resources::textures->get(Resources::wall));
+			mSprite.setOrigin(mSprite.getLocalBounds().width - 50.0f, mSprite.getLocalBounds().height - 50.0f);
 			break;
 		case 6:
 			mSprite.setTexture(Resources::textures->get(Resources::stoneWall));
+			mSprite.setOrigin(mSprite.getLocalBounds().width - 50.0f, mSprite.getLocalBounds().height - 50.0f);
 			break;
 	}
 }
