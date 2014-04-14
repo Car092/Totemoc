@@ -17,6 +17,7 @@ public:
 	void updateCurrent(const sf::Time& dt, Tilemap* tilemap);
 	void drawCurrent(sf::RenderTarget& target, sf::Vector2f camera) const;
 	void checkCollisions(Tilemap* tilemap);
+	void correctCol(sf::FloatRect rect);
 };
 
 #endif //TOTEMOC_PLAYER_HPP

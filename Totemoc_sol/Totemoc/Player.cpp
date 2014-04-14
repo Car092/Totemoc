@@ -15,16 +15,16 @@ Player::Player() : Entity(),
 void Player::updateCurrent(const sf::Time& dt, Tilemap* tilemap)
 {
 	setVelocity(sf::Vector2f(0.0f, 0.0f));
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
 		setVelocity(getVelocity() += sf::Vector2f(-1.0f, 0.0f));
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
 		setVelocity(getVelocity() += sf::Vector2f(1.0f, 0.0f));
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
 		setVelocity(getVelocity() += sf::Vector2f(0.0f, -1.0f));
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
 		setVelocity(getVelocity() += sf::Vector2f(0.0f, 1.0f));
 	}
 
@@ -72,7 +72,7 @@ void Player::checkCollisions(Tilemap* tilemap){
 	for (SpriteNode* floorTile : floorTilesPtrs){
 		if (floorTile->getColType() == SceneNode::ColType::unwalkable){
 			if (getColRect().intersects(floorTile->getColRect())){
-				move(getVelocity()*(mSpeed * -1.0f)*Times::TIME_P_FRAME.asSeconds());
+				correctCol(floorTile->getColRect());
 				return;
 			}
 		}
@@ -80,7 +80,7 @@ void Player::checkCollisions(Tilemap* tilemap){
 	for (Entity* item : itemsPtrs){
 		if (item->getColType() == SceneNode::ColType::unwalkable){
 			if (getColRect().intersects(item->getColRect())){
-				move(getVelocity()*(mSpeed * -1.0f)*Times::TIME_P_FRAME.asSeconds());
+				correctCol(item->getColRect());
 				return;
 			}
 		}
@@ -88,7 +88,7 @@ void Player::checkCollisions(Tilemap* tilemap){
 	for (Entity* livingElem : livingPtrs){
 		if (livingElem->getColType() == SceneNode::ColType::unwalkable){
 			if (getColRect().intersects(livingElem->getColRect())){
-				move(getVelocity()*(mSpeed * -1.0f)*Times::TIME_P_FRAME.asSeconds());
+				correctCol(livingElem->getColRect());
 				return;
 			}
 		}
@@ -96,10 +96,41 @@ void Player::checkCollisions(Tilemap* tilemap){
 	for (SpriteNode* tallTile : tallTilesPtrs){
 		if (tallTile->getColType() == SceneNode::ColType::unwalkable){
 			if (getColRect().intersects(tallTile->getColRect())){
-				move(getVelocity()*(mSpeed * -1.0f)*Times::TIME_P_FRAME.asSeconds());
-//				move(sf::Vector2f(1.0f, 0.0f));
+				correctCol(tallTile->getColRect());
 				return;
 			}
 		}
 	}
+}
+
+void Player::correctCol(sf::FloatRect rectB){
+	sf::FloatRect rectA = getColRect();
+	float aMin_x = rectA.left;
+	float aMax_x = rectA.left + rectA.width;
+	float bMin_x = rectB.left;
+	float bMax_x = rectB.left + rectB.width;
+	float aMin_y = rectA.top;
+	float aMax_y = rectA.top + rectA.height;
+	float bMin_y = rectB.top;
+	float bMax_y = rectB.top + rectB.height;
+	sf::Vector2f correctVec;
+	if (aMax_x - bMin_x < bMax_x - aMin_x){
+		correctVec.x = (aMax_x - bMin_x) * -1.0f;
+	}
+	else{
+		correctVec.x = bMax_x - aMin_x;
+	}
+	if (aMax_y - bMin_y < bMax_y - aMin_y){
+		correctVec.y = (aMax_y - bMin_y) * -1.0f;
+	}
+	else{
+		correctVec.y = bMax_y - aMin_y;
+	}
+	if (std::abs(correctVec.x) < std::abs(correctVec.y)){
+		correctVec.y = 0.0f;
+	}
+	else{
+		correctVec.x = 0.0f;
+	}
+	move(correctVec);
 }
