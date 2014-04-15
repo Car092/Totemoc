@@ -3,7 +3,8 @@
 Game::Game() :
 mWindow(sf::VideoMode(Sizes::WINDOW_RESOLUTION.x, Sizes::WINDOW_RESOLUTION.y), "pTotemoc", sf::Style::Close), 
 mStats(),
-mWorld(mWindow)
+mWorld(mWindow),
+mPlayerController(mWorld.getPlayer())
 {
 
 }
@@ -17,7 +18,7 @@ void Game::run(){
 		fixedStepTime += fixedStepClock.restart();
 		while (fixedStepTime > Times::TIME_P_FRAME){
 			fixedStepTime -= Times::TIME_P_FRAME;
-			processEvents();
+			processInput();
 			update();
 			mStats.updateLogic(clockLogic.restart());
 		}
@@ -32,12 +33,14 @@ void Game::run(){
 	}
 }
 
-void Game::processEvents(){
+void Game::processInput(){
 	sf::Event event;
 	while (mWindow.pollEvent(event)){
 		if (event.type == sf::Event::Closed)
 			mWindow.close();
+		mPlayerController.handleEvent(event);
 	}
+	mPlayerController.handleRealtimeInput();
 }
 
 void Game::update(){

@@ -167,3 +167,6 @@ void World::activateTile(Tile* tile, std::vector<SpriteNode*>& floorTiles,
 	}
 }
 
+Player* World::getPlayer(){
+	return mPlayer;
+}

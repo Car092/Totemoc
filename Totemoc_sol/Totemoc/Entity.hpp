@@ -11,7 +11,7 @@ class Entity : public SceneNode{
 		void setVelocity(float vx, float vy);
 		sf::Vector2f getVelocity();
 
-	private:
+	protected:
 		sf::Vector2f mVelocity;
 };
 #endif //TOTEMOC_ENTITY_HPP

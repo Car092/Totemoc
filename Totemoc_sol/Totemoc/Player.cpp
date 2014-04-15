@@ -4,7 +4,7 @@
 
 Player::Player() : Entity(),
 	mSprite(),
-	mSpeed(2.0f)
+	mSpeed(3.0f)
 {
 	setPosition(20.0f, 15.0f);
 	mSprite.setPosition(Sizes::TILE_SIZE.x*Sizes::TILES_PER_SCREEN.x/2.0f, Sizes::TILE_SIZE.y*Sizes::TILES_PER_SCREEN.y/2.0f);
@@ -14,45 +14,35 @@ Player::Player() : Entity(),
 
 void Player::updateCurrent(const sf::Time& dt, Tilemap* tilemap)
 {
-	setVelocity(sf::Vector2f(0.0f, 0.0f));
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-		setVelocity(getVelocity() += sf::Vector2f(-1.0f, 0.0f));
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-		setVelocity(getVelocity() += sf::Vector2f(1.0f, 0.0f));
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-		setVelocity(getVelocity() += sf::Vector2f(0.0f, -1.0f));
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-		setVelocity(getVelocity() += sf::Vector2f(0.0f, 1.0f));
-	}
-
-	if (getVelocity().x == 0.0f && getVelocity().y == 1.0f){
+	if (mVelocity.x == 0.0f && mVelocity.y == 1.0f){
 		mSprite.setTexture(Resources::textures->get(Resources::TextureID::player));
 	}
-	if (getVelocity().x == -1.0f && getVelocity().y == 0.0f){
+	if (mVelocity.x == -1.0f && mVelocity.y == 0.0f){
 		mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerLeft));
 	}
-	if (getVelocity().x == 1.0f && getVelocity().y == 0.0f){
+	if (mVelocity.x == 1.0f && mVelocity.y == 0.0f){
 		mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerRight));
 	}
-	if (getVelocity().x == 0.0f && getVelocity().y == -1.0f){
+	if (mVelocity.x == 0.0f && mVelocity.y == -1.0f){
 		mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerBack));
 	}
-	if (getVelocity().x == -1.0f && getVelocity().y == -1.0f){
+	if (mVelocity.x == -1.0f && mVelocity.y == -1.0f){
 		mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerBL));
+		mVelocity /= std::sqrtf(2.0f);
 	}
-	if (getVelocity().x == 1.0f && getVelocity().y == -1.0f){
+	if (mVelocity.x == 1.0f && mVelocity.y == -1.0f){
 		mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerBR));
+		mVelocity /= std::sqrtf(2.0f);
 	}
-	if (getVelocity().x == -1.0f && getVelocity().y == 1.0f){
+	if (mVelocity.x == -1.0f && mVelocity.y == 1.0f){
 		mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerFL));
+		mVelocity /= std::sqrtf(2.0f);
 	}
-	if (getVelocity().x == 1.0f && getVelocity().y == 1.0f){
+	if (mVelocity.x == 1.0f && mVelocity.y == 1.0f){
 		mSprite.setTexture(Resources::textures->get(Resources::TextureID::playerFR));
+		mVelocity /= std::sqrtf(2.0f);
 	}
-	move(getVelocity()*mSpeed*dt.asSeconds());
+	move(mVelocity*mSpeed*dt.asSeconds());
 	checkCollisions(tilemap);
 }
 

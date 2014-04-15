@@ -18,6 +18,7 @@ public:
 	explicit World(sf::RenderWindow& window);
 	void update(sf::Time dt);
 	void draw();
+	Player* getPlayer();
 
 private:
 	void initWorld();

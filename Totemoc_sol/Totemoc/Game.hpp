@@ -7,6 +7,7 @@
 #include "TimeConstants.hpp"
 #include "Statistics.hpp"
 #include "World.hpp"
+#include "PlayerController.hpp"
 
 class Game {
 public:
@@ -17,8 +18,9 @@ private:
 	sf::RenderWindow mWindow;
 	Statistics mStats;
 	World mWorld;
+	PlayerController mPlayerController;
 
-	void processEvents();
+	void processInput();
 	void update();
 	void render();
 
