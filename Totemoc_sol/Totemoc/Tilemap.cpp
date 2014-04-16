@@ -35,6 +35,18 @@ void Tilemap::refreshTiles(const sf::Vector2f& playerPos){
 	}
 }
 
+void Tilemap::update(const sf::Time& dt, Tilemap* tilemap, const sf::Vector2f& playerPos){
+	forEach_In_Zone(playerPos, Sizes::EXTRA_TILES_PER_SCREEN, [&](Tile& tile, int tileX, int tileY){tile.update(dt, tilemap); });
+}
+
+void Tilemap::draw(sf::RenderWindow& window, const sf::Vector2f& playerPos){
+	sf::Vector2f camPos = sf::Vector2f(playerPos.x - (float)Sizes::TILES_PER_SCREEN.x/2.0f, playerPos.y - (float)Sizes::TILES_PER_SCREEN.y/2.0f);
+	forEach_In_Zone(playerPos, Sizes::EXTRA_TILES_PER_SCREEN, [&](Tile& tile, int tileX, int tileY){tile.drawLayer1(window, camPos); });
+	forEach_In_Zone(playerPos, Sizes::EXTRA_TILES_PER_SCREEN, [&](Tile& tile, int tileX, int tileY){tile.drawLayer2(window, camPos); });
+	forEach_In_Zone(playerPos, Sizes::EXTRA_TILES_PER_SCREEN, [&](Tile& tile, int tileX, int tileY){tile.drawLayer3(window, camPos); });
+	forEach_In_Zone(playerPos, Sizes::EXTRA_TILES_PER_SCREEN, [&](Tile& tile, int tileX, int tileY){tile.drawLayer4(window, camPos); });
+}
+
 Tile& Tilemap::getTile(int tileX, int tileY){
 	return mMap[tileY][tileX];
 }

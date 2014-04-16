@@ -1,7 +1,7 @@
-#include "SpriteNode.hpp"
+#include "SpriteEntity.hpp"
 #include "Resources.hpp"
 
-SpriteNode::SpriteNode(int type){
+SpriteEntity::SpriteEntity(int type){
 	switch (type){
 		case 0:
 			mSprite.setTexture(Resources::textures->get(Resources::grass));
@@ -29,10 +29,10 @@ SpriteNode::SpriteNode(int type){
 	}
 }
 
-void SpriteNode::drawCurrent(sf::RenderTarget& target, sf::Vector2f camera) const{
-	sf::Vector2f screenPos = getPosition() - camera;
+void SpriteEntity::draw(sf::RenderWindow& window, const sf::Vector2f& camPos){
+	sf::Vector2f screenPos = getPosition() - camPos;
 	screenPos *= 50.0f;
 	sf::RenderStates states;
 	states.transform.translate(screenPos);
-	target.draw(mSprite, states);
+	window.draw(mSprite, states);
 }

@@ -4,13 +4,15 @@
 #include <memory>
 #include "SFML/Graphics.hpp"
 #include "SizeConstants.hpp"
-#include "SpriteNode.hpp"
+#include "SpriteEntity.hpp"
 #include "Entity.hpp"
+
+class Tilemap;
 
 class Tile{
 public:
 	typedef std::unique_ptr<Entity> EntityPtr;
-	typedef std::unique_ptr<SpriteNode> SpritePtr;
+	typedef std::unique_ptr<SpriteEntity> SpritePtr;
 
 public:
 	sf::Vector2i mPosition;
@@ -22,14 +24,21 @@ public:
 public:
 	Tile(int type);
 	Tile(Tile&& tile);
+	void update(const sf::Time& dt, Tilemap* tilemap);
+	void drawLayer1(sf::RenderWindow& window, const sf::Vector2f& camPos);
+	void drawLayer2(sf::RenderWindow& window, const sf::Vector2f& camPos);
+	void drawLayer3(sf::RenderWindow& window, const sf::Vector2f& camPos);
+	void drawLayer4(sf::RenderWindow& window, const sf::Vector2f& camPos);
 	void setPosition(sf::Vector2i pos);
 	const sf::Vector2i& getPosition();
 	void dumpMoved(int tileX, int tileY, std::vector<EntityPtr>& itemsOut, std::vector<EntityPtr>& entitiesOut);
 	void pushItem(EntityPtr itemIn);
 	void pushLiving(EntityPtr entityIn);
-	void packInVectors(std::vector<SpriteNode*>& floorTiles, std::vector<Entity*>& items,
-		std::vector<Entity*>& living, std::vector<SpriteNode*>& tallTiles);
 	Tile& operator=(Tile&& tile);
+	SpritePtr& getFloorSprite();
+	std::vector<EntityPtr>& getItems();
+	std::vector<EntityPtr>& getLiving();
+	SpritePtr& getTallSprite();
 };
 
 #endif //TOTEMOC_TILE_HPP

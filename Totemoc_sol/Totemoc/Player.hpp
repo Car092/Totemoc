@@ -14,8 +14,8 @@ private:
 
 public:
 	Player();
-	void updateCurrent(const sf::Time& dt, Tilemap* tilemap);
-	void drawCurrent(sf::RenderTarget& target, sf::Vector2f camera) const;
+	void update(const sf::Time& dt, Tilemap* tilemap);
+	void draw(sf::RenderWindow& window, const sf::Vector2f& camPos);
 	void checkCollisions(Tilemap* tilemap);
 	void correctCol(sf::FloatRect rect);
 };

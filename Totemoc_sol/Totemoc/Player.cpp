@@ -12,7 +12,7 @@ Player::Player() : Entity(),
 	setColRect(sf::Vector2f(1.0f, 1.0f));
 }
 
-void Player::updateCurrent(const sf::Time& dt, Tilemap* tilemap)
+void Player::update(const sf::Time& dt, Tilemap* tilemap)
 {
 	if (mVelocity.x == 0.0f && mVelocity.y == 1.0f){
 		mSprite.setTexture(Resources::textures->get(Resources::TextureID::player));
@@ -46,21 +46,28 @@ void Player::updateCurrent(const sf::Time& dt, Tilemap* tilemap)
 	checkCollisions(tilemap);
 }
 
-void Player::drawCurrent(sf::RenderTarget& target, sf::Vector2f camera) const{
-	target.draw(mSprite);
+void Player::draw(sf::RenderWindow& window, const sf::Vector2f& camPos){
+	window.draw(mSprite);
 }
 
 void Player::checkCollisions(Tilemap* tilemap){
-	std::vector<SpriteNode*> floorTilesPtrs;
+	std::vector<SpriteEntity*> floorTilesPtrs;
 	std::vector<Entity*> itemsPtrs;
 	std::vector<Entity*> livingPtrs;
-	std::vector<SpriteNode*> tallTilesPtrs;
+	std::vector<SpriteEntity*> tallTilesPtrs;
 	tilemap->forEach_In_Zone(getPosition(), sf::Vector2i(4, 4), [&](Tile& tile, int tileX, int tileY)
 	{
-		tile.packInVectors(floorTilesPtrs, itemsPtrs, livingPtrs, tallTilesPtrs);
+		floorTilesPtrs.push_back(tile.getFloorSprite().get());
+		for (Tile::EntityPtr& item : tile.getItems()){
+			itemsPtrs.push_back(item.get());
+		}
+		for (Tile::EntityPtr& living : tile.getLiving()){
+			livingPtrs.push_back(living.get());
+		}
+		tallTilesPtrs.push_back(tile.getTallSprite().get());
 	});
-	for (SpriteNode* floorTile : floorTilesPtrs){
-		if (floorTile->getColType() == SceneNode::ColType::unwalkable){
+	for (SpriteEntity* floorTile : floorTilesPtrs){
+		if (floorTile->getColType() == Entity::ColType::nonwalkable){
 			if (getColRect().intersects(floorTile->getColRect())){
 				correctCol(floorTile->getColRect());
 				return;
@@ -68,7 +75,7 @@ void Player::checkCollisions(Tilemap* tilemap){
 		}
 	}
 	for (Entity* item : itemsPtrs){
-		if (item->getColType() == SceneNode::ColType::unwalkable){
+		if (item->getColType() == Entity::ColType::nonwalkable){
 			if (getColRect().intersects(item->getColRect())){
 				correctCol(item->getColRect());
 				return;
@@ -76,15 +83,15 @@ void Player::checkCollisions(Tilemap* tilemap){
 		}
 	}
 	for (Entity* livingElem : livingPtrs){
-		if (livingElem->getColType() == SceneNode::ColType::unwalkable){
+		if (livingElem->getColType() == Entity::ColType::nonwalkable){
 			if (getColRect().intersects(livingElem->getColRect())){
 				correctCol(livingElem->getColRect());
 				return;
 			}
 		}
 	}
-	for (SpriteNode* tallTile : tallTilesPtrs){
-		if (tallTile->getColType() == SceneNode::ColType::unwalkable){
+	for (SpriteEntity* tallTile : tallTilesPtrs){
+		if (tallTile->getColType() == Entity::ColType::nonwalkable){
 			if (getColRect().intersects(tallTile->getColRect())){
 				correctCol(tallTile->getColRect());
 				return;

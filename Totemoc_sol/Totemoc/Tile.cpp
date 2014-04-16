@@ -3,8 +3,8 @@
 #include "Resources.hpp"
 
 Tile::Tile(int type) : mItems(), mLiving(){
-	mFloorSprite = SpritePtr(new SpriteNode(type));
-	mTallSprite = SpritePtr(new SpriteNode(10));
+	mFloorSprite = SpritePtr(new SpriteEntity(type));
+	mTallSprite = SpritePtr(new SpriteEntity(10));
 }
 
 Tile::Tile(Tile&& tile) : 
@@ -14,6 +14,37 @@ mItems(std::move(tile.mItems)),
 mLiving(std::move(tile.mLiving)),
 mTallSprite(std::move(tile.mTallSprite))
 {
+}
+
+void Tile::update(const sf::Time& dt, Tilemap* tilemap){
+	mFloorSprite->update(dt, tilemap);
+	for (EntityPtr& item : mItems){
+		item->update(dt, tilemap);
+	}
+	for (EntityPtr& living : mLiving){
+		living->update(dt, tilemap);
+	}
+	mTallSprite->update(dt, tilemap);
+}
+
+void Tile::drawLayer1(sf::RenderWindow& window, const sf::Vector2f& camPos){
+	mFloorSprite->draw(window, camPos);
+}
+
+void Tile::drawLayer2(sf::RenderWindow& window, const sf::Vector2f& camPos){
+	for (EntityPtr& item : mItems){
+		item->draw(window, camPos);
+	}
+}
+
+void Tile::drawLayer3(sf::RenderWindow& window, const sf::Vector2f& camPos){
+	for (EntityPtr& living : mLiving){
+		living->draw(window, camPos);
+	}
+}
+
+void Tile::drawLayer4(sf::RenderWindow& window, const sf::Vector2f& camPos){
+	mTallSprite->draw(window, camPos);
 }
 
 void Tile::dumpMoved(int tileX, int tileY, std::vector<EntityPtr>& itemsOut, std::vector<EntityPtr>& livingOut){
@@ -46,19 +77,6 @@ void Tile::pushLiving(EntityPtr entityIn){
 	mLiving.push_back(std::move(entityIn));
 }
 
-void Tile::packInVectors(std::vector<SpriteNode*>& floorTiles, std::vector<Entity*>& items,
-	                     std::vector<Entity*>& living, std::vector<SpriteNode*>& tallTiles)
-{
-	floorTiles.push_back(mFloorSprite.get());
-	for (EntityPtr& item : mItems){
-		items.push_back(item.get());
-	}
-	for (EntityPtr& livingElem : mLiving){
-		living.push_back(livingElem.get());
-	}
-	tallTiles.push_back(mTallSprite.get());
-}
-
 void Tile::setPosition(sf::Vector2i pos){
 	mPosition = pos;
 	mFloorSprite->setPosition((float)pos.x, (float)pos.y);
@@ -75,4 +93,20 @@ Tile& Tile::operator=(Tile&& tile){
 	mLiving = std::move(tile.mLiving);
 	mTallSprite = std::move(tile.mTallSprite);
 	return *this;
+}
+
+Tile::SpritePtr& Tile::getFloorSprite(){
+	return mFloorSprite;
+}
+
+std::vector<Tile::EntityPtr>& Tile::getItems(){
+	return mItems;
+}
+
+std::vector<Tile::EntityPtr>& Tile::getLiving(){
+	return mLiving;
+}
+
+Tile::SpritePtr& Tile::getTallSprite(){
+	return mTallSprite;
 }

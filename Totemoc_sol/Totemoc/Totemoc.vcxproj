@@ -93,8 +93,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Resources.cpp" />
-    <ClCompile Include="SceneNode.cpp" />
-    <ClCompile Include="SpriteNode.cpp" />
+    <ClCompile Include="SpriteEntity.cpp" />
     <ClCompile Include="Statistics.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Tilemap.cpp" />
@@ -109,9 +108,8 @@
     <ClInclude Include="PlayerController.hpp" />
     <ClInclude Include="ResourceHolder.hpp" />
     <ClInclude Include="Resources.hpp" />
-    <ClInclude Include="SceneNode.hpp" />
     <ClInclude Include="SizeConstants.hpp" />
-    <ClInclude Include="SpriteNode.hpp" />
+    <ClInclude Include="SpriteEntity.hpp" />
     <ClInclude Include="Statistics.hpp" />
     <ClInclude Include="Tile.hpp" />
     <ClInclude Include="Tilemap.hpp" />
