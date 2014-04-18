@@ -54,6 +54,9 @@
     <ClCompile Include="SpriteEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ConvexPolygon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.hpp">
@@ -99,6 +102,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SpriteEntity.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConvexPolygon.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

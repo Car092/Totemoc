@@ -17,7 +17,7 @@ public:
 	void update(const sf::Time& dt, Tilemap* tilemap);
 	void draw(sf::RenderWindow& window, const sf::Vector2f& camPos);
 	void checkCollisions(Tilemap* tilemap);
-	void correctCol(sf::FloatRect rect);
+	void correctCol(const ConvexPolygon& polyB);
 };
 
 #endif //TOTEMOC_PLAYER_HPP

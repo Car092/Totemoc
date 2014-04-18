@@ -26,17 +26,9 @@ sf::Vector2f Entity::getVelocity(){
 	return mVelocity;
 }
 
-void Entity::setColRect(sf::Vector2f size, sf::Vector2f posRel){
-	mColRect = sf::FloatRect(posRel, size);
-}
-
-sf::FloatRect Entity::getColRect(){
-	sf::FloatRect colRect;
-	colRect.width = mColRect.width;
-	colRect.height = mColRect.height;
-	colRect.left = getPosition().x + mColRect.left;
-	colRect.top = getPosition().y + mColRect.top;
-	return colRect;
+ConvexPolygon& Entity::getColPoly(){
+	mColPoly.updateWorldPos(getPosition());
+	return mColPoly;
 }
 
 Entity::ColType Entity::getColType(){

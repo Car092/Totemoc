@@ -13,8 +13,6 @@ mPlayer(nullptr)
 
 	mTilemap.getTile(21, 25).mTallSprite = Tile::SpritePtr(new SpriteEntity(5));
 	mTilemap.getTile(21, 25).mTallSprite->setPosition(21.0f, 25.0f);
-	mTilemap.getTile(21, 25).mTallSprite->setColRect(sf::Vector2f(1.0f, 1.0f));
-	mTilemap.getTile(21, 25).mTallSprite->setColType(Entity::ColType::nonwalkable);
 
 	mTilemap.getTile(21, 20).mTallSprite = Tile::SpritePtr(new SpriteEntity(6));
 	mTilemap.getTile(21, 20).mTallSprite->setPosition(21.0f, 20.0f);
