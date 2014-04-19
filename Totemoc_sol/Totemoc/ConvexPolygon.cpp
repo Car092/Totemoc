@@ -95,3 +95,13 @@ void ConvexPolygon::debugDraw(sf::RenderWindow& window, sf::Vector2f camPos){
 	mDebugShape.setPosition((mWorldPos - camPos) * 50.0f);
 	window.draw(mDebugShape);
 }
+
+void ConvexPolygon::rotate(float degrees){
+	sf::Transform transform;
+	transform.rotate(degrees);
+	for (unsigned i = 0; i < mVertices.size(); i++){
+		mVertices[i] = transform * mVertices[i];
+		mDebugShape.setPoint(i, mVertices[i]);
+	}
+}
+

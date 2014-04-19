@@ -4,6 +4,9 @@
 #include "Entity.hpp"
 
 class Attack : public Entity{
+public:
+	Attack(Tilemap* tilemap);
+	void draw(sf::RenderWindow& window, const sf::Vector2f& camPos);
 
 };
 

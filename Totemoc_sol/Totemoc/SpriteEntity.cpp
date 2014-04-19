@@ -1,7 +1,7 @@
 #include "SpriteEntity.hpp"
 #include "Resources.hpp"
 
-SpriteEntity::SpriteEntity(int type){
+SpriteEntity::SpriteEntity(Tilemap* tilemap, int type): Entity(tilemap){
 	switch (type){
 		case 0:
 			mSprite.setTexture(Resources::textures->get(Resources::grass));
@@ -19,6 +19,16 @@ SpriteEntity::SpriteEntity(int type){
 			mSprite.setTexture(Resources::textures->get(Resources::water));
 			break;
 		case 5:
+			mSprite.setTexture(Resources::textures->get(Resources::rock));
+			mSprite.setOrigin(mSprite.getLocalBounds().width - 50.0f, mSprite.getLocalBounds().height - 50.0f);
+			mColPoly.addVertex(sf::Vector2f(0.0f, 0.0f));
+			mColPoly.addVertex(sf::Vector2f(1.0f, 0.0f));
+			mColPoly.addVertex(sf::Vector2f(1.0f, 1.0f));
+			mColPoly.addVertex(sf::Vector2f(0.0f, 1.0f));
+			mColPoly.calcNormals();
+			setColType(Entity::ColType::nonwalkable);
+			break;
+		case 6:
 			mSprite.setTexture(Resources::textures->get(Resources::wall));
 			mSprite.setOrigin(mSprite.getLocalBounds().width - 50.0f, mSprite.getLocalBounds().height - 50.0f);
 			mColPoly.addVertex(sf::Vector2f(0.0f, 0.0f));
@@ -32,7 +42,7 @@ SpriteEntity::SpriteEntity(int type){
 			mColPoly.calcNormals();
 			setColType(Entity::ColType::nonwalkable);
 			break;
-		case 6:
+		case 7:
 			mSprite.setTexture(Resources::textures->get(Resources::stoneWall));
 			mSprite.setOrigin(mSprite.getLocalBounds().width - 50.0f, mSprite.getLocalBounds().height - 50.0f);
 			mColPoly.addVertex(sf::Vector2f(0.0f, 0.4f));

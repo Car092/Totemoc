@@ -22,5 +22,7 @@ void PlayerController::handleRealtimeInput(){
 }
 
 void PlayerController::handleEvent(const sf::Event& event){
-
+	if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Button::Right){
+		mPlayer->attack(sf::Vector2f((float)event.mouseButton.x, (float)event.mouseButton.y));
+	}
 }

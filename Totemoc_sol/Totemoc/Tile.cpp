@@ -2,9 +2,9 @@
 #include "Tile.hpp"
 #include "Resources.hpp"
 
-Tile::Tile(int type) : mItems(), mLiving(){
-	mFloorSprite = SpritePtr(new SpriteEntity(type));
-	mTallSprite = SpritePtr(new SpriteEntity(10));
+Tile::Tile(Tilemap* tilemap, int type) : mItems(), mLiving(){
+	mFloorSprite = SpritePtr(new SpriteEntity(tilemap, type));
+	mTallSprite = SpritePtr(new SpriteEntity(tilemap, 10));
 }
 
 Tile::Tile(Tile&& tile) : 
@@ -16,15 +16,15 @@ mTallSprite(std::move(tile.mTallSprite))
 {
 }
 
-void Tile::update(const sf::Time& dt, Tilemap* tilemap){
-	mFloorSprite->update(dt, tilemap);
+void Tile::update(const sf::Time& dt){
+	mFloorSprite->update(dt);
 	for (EntityPtr& item : mItems){
-		item->update(dt, tilemap);
+		item->update(dt);
 	}
 	for (EntityPtr& living : mLiving){
-		living->update(dt, tilemap);
+		living->update(dt);
 	}
-	mTallSprite->update(dt, tilemap);
+	mTallSprite->update(dt);
 }
 
 void Tile::drawLayer1(sf::RenderWindow& window, const sf::Vector2f& camPos){

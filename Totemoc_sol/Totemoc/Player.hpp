@@ -6,6 +6,8 @@
 #include "Resources.hpp"
 #include "Entity.hpp"
 
+class Attack;
+
 class Player : public Entity 
 {
 private:
@@ -13,11 +15,15 @@ private:
 	sf::Sprite mSprite;
 
 public:
-	Player();
-	void update(const sf::Time& dt, Tilemap* tilemap);
+	Player(Tilemap* tilemap);
+	void update(const sf::Time& dt);
 	void draw(sf::RenderWindow& window, const sf::Vector2f& camPos);
-	void checkCollisions(Tilemap* tilemap);
+	void checkCollisions();
 	void correctCol(const ConvexPolygon& polyB);
+	void attack(sf::Vector2f mousePos);
+
+private:
+	void putAttack(std::unique_ptr<Entity> attack, ConvexPolygon& attackPoly, float rotAngle, sf::Vector2f worldPos);
 };
 
 #endif //TOTEMOC_PLAYER_HPP

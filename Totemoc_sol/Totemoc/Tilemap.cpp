@@ -10,7 +10,7 @@ void Tilemap::loadMap(std::vector<std::vector<int>>& map)
 	for (int i = 0; i < (int)map.size(); i++){
 		std::vector<Tile> row;
 		for (int j = 0; j < (int)map[0].size(); j++){
-			Tile tile(map[i][j]);
+			Tile tile(this, map[i][j]);
 			tile.setPosition(sf::Vector2i(j, i));
 			row.push_back(std::move(tile));
 		}
@@ -35,8 +35,8 @@ void Tilemap::refreshTiles(const sf::Vector2f& playerPos){
 	}
 }
 
-void Tilemap::update(const sf::Time& dt, Tilemap* tilemap, const sf::Vector2f& playerPos){
-	forEach_In_Zone(playerPos, Sizes::EXTRA_TILES_PER_SCREEN, [&](Tile& tile, int tileX, int tileY){tile.update(dt, tilemap); });
+void Tilemap::update(const sf::Time& dt, const sf::Vector2f& playerPos){
+	forEach_In_Zone(playerPos, Sizes::EXTRA_TILES_PER_SCREEN, [&](Tile& tile, int tileX, int tileY){tile.update(dt); });
 }
 
 void Tilemap::draw(sf::RenderWindow& window, const sf::Vector2f& playerPos){

@@ -1,8 +1,10 @@
 #include "Player.hpp"
 #include "Tilemap.hpp"
 #include "TimeConstants.hpp"
+#include "Attack.hpp"
+#include <iostream>
 
-Player::Player() : Entity(),
+Player::Player(Tilemap* tilemap) : Entity(tilemap),
 	mSprite(),
 	mSpeed(3.0f)
 {
@@ -16,7 +18,7 @@ Player::Player() : Entity(),
 	mColPoly.calcNormals();
 }
 
-void Player::update(const sf::Time& dt, Tilemap* tilemap)
+void Player::update(const sf::Time& dt)
 {
 	if (mVelocity.x == 0.0f && mVelocity.y == 1.0f){
 		mSprite.setTexture(Resources::textures->get(Resources::TextureID::player));
@@ -47,7 +49,7 @@ void Player::update(const sf::Time& dt, Tilemap* tilemap)
 		mVelocity /= std::sqrtf(2.0f);
 	}
 	move(mVelocity*mSpeed*dt.asSeconds());
-	checkCollisions(tilemap);
+	checkCollisions();
 }
 
 void Player::draw(sf::RenderWindow& window, const sf::Vector2f& camPos){
@@ -55,13 +57,13 @@ void Player::draw(sf::RenderWindow& window, const sf::Vector2f& camPos){
 	mColPoly.debugDraw(window, camPos);
 }
 
-void Player::checkCollisions(Tilemap* tilemap){
+void Player::checkCollisions(){
 	std::vector<SpriteEntity*> floorTilesPtrs;
 	std::vector<Entity*> itemsPtrs;
 	std::vector<Entity*> livingPtrs;
 	std::vector<SpriteEntity*> tallTilesPtrs;
 	mColPoly.updateWorldPos(getPosition());
-	tilemap->forEach_In_Zone(getPosition(), sf::Vector2i(4, 4), [&](Tile& tile, int tileX, int tileY)
+	mTilemap->forEach_In_Zone(getPosition(), sf::Vector2i(4, 4), [&](Tile& tile, int tileX, int tileY)
 	{
 		floorTilesPtrs.push_back(tile.getFloorSprite().get());
 		for (Tile::EntityPtr& item : tile.getItems()){
@@ -72,30 +74,27 @@ void Player::checkCollisions(Tilemap* tilemap){
 		}
 		tallTilesPtrs.push_back(tile.getTallSprite().get());
 	});
-	//for (SpriteEntity* floorTile : floorTilesPtrs){
-	//	if (floorTile->getColType() == Entity::ColType::nonwalkable){
-	//		if (getColRect().intersects(floorTile->getColRect())){
-	//			correctCol(floorTile->getColRect());
-	//			return;
-	//		}
-	//	}
-	//}
-	//for (Entity* item : itemsPtrs){
-	//	if (item->getColType() == Entity::ColType::nonwalkable){
-	//		if (getColRect().intersects(item->getColRect())){
-	//			correctCol(item->getColRect());
-	//			return;
-	//		}
-	//	}
-	//}
-	//for (Entity* livingElem : livingPtrs){
-	//	if (livingElem->getColType() == Entity::ColType::nonwalkable){
-	//		if (getColRect().intersects(livingElem->getColRect())){
-	//			correctCol(livingElem->getColRect());
-	//			return;
-	//		}
-	//	}
-	//}
+	for (SpriteEntity* floorTile : floorTilesPtrs){
+		if (floorTile->getColType() == Entity::ColType::nonwalkable){
+			floorTile->getColPoly().updateWorldPos(floorTile->getPosition());
+			sf::Vector2f displVec = mColPoly.checkUnwalkable(floorTile->getColPoly());
+			move(displVec);
+		}
+	}
+	for (Entity* item : itemsPtrs){
+		if (item->getColType() == Entity::ColType::nonwalkable){
+			item->getColPoly().updateWorldPos(item->getPosition());
+			sf::Vector2f displVec = mColPoly.checkUnwalkable(item->getColPoly());
+			move(displVec);
+		}
+	}
+	for (Entity* livingElem : livingPtrs){
+		if (livingElem->getColType() == Entity::ColType::nonwalkable){
+			livingElem->getColPoly().updateWorldPos(livingElem->getPosition());
+			sf::Vector2f displVec = mColPoly.checkUnwalkable(livingElem->getColPoly());
+			move(displVec);
+		}
+	}
 	for (SpriteEntity* tallTile : tallTilesPtrs){
 		if (tallTile->getColType() == Entity::ColType::nonwalkable){
 			tallTile->getColPoly().updateWorldPos(tallTile->getPosition());
@@ -105,34 +104,57 @@ void Player::checkCollisions(Tilemap* tilemap){
 	}
 }
 
-//void Player::correctCol(const ConvexPolygon& polyB){
-//	ConvexPolygon polyA = getColPoly();
-//	float aMin_x = rectA.left;
-//	float aMax_x = rectA.left + rectA.width;
-//	float bMin_x = rectB.left;
-//	float bMax_x = rectB.left + rectB.width;
-//	float aMin_y = rectA.top;
-//	float aMax_y = rectA.top + rectA.height;
-//	float bMin_y = rectB.top;
-//	float bMax_y = rectB.top + rectB.height;
-//	sf::Vector2f correctVec;
-//	if (aMax_x - bMin_x < bMax_x - aMin_x){
-//		correctVec.x = (aMax_x - bMin_x) * -1.0f;
-//	}
-//	else{
-//		correctVec.x = bMax_x - aMin_x;
-//	}
-//	if (aMax_y - bMin_y < bMax_y - aMin_y){
-//		correctVec.y = (aMax_y - bMin_y) * -1.0f;
-//	}
-//	else{
-//		correctVec.y = bMax_y - aMin_y;
-//	}
-//	if (std::abs(correctVec.x) < std::abs(correctVec.y)){
-//		correctVec.y = 0.0f;
-//	}
-//	else{
-//		correctVec.x = 0.0f;
-//	}
-//	move(correctVec);
-//}
+void Player::attack(sf::Vector2f mousePos){
+	std::unique_ptr<Entity> attack(new Attack(mTilemap));
+	ConvexPolygon attackPolySide;
+
+	attackPolySide.addVertex(sf::Vector2f(0.0f, 0.0f));
+	attackPolySide.addVertex(sf::Vector2f(0.8f, -1.0f));
+	attackPolySide.addVertex(sf::Vector2f(1.0f, 0.0f));
+	attackPolySide.addVertex(sf::Vector2f(0.8f, 1.0f));
+
+	sf::FloatRect northWest(mSprite.getPosition() + sf::Vector2f(-200.0f, -200.0f), sf::Vector2f(200.0f, 200.0f));
+	sf::FloatRect north(mSprite.getPosition() + sf::Vector2f(0.0f, -200.0f), sf::Vector2f(mSprite.getLocalBounds().width, 200.0f));
+	sf::FloatRect northEast(mSprite.getPosition() + sf::Vector2f(mSprite.getLocalBounds().width, -200.0f), sf::Vector2f(200.0f, 200.0f));
+	sf::FloatRect east(mSprite.getPosition() + sf::Vector2f(mSprite.getLocalBounds().width, 0.0f), sf::Vector2f(200.0f, mSprite.getLocalBounds().height));
+	sf::FloatRect southEast(mSprite.getPosition() + sf::Vector2f(mSprite.getLocalBounds().width, mSprite.getLocalBounds().height), sf::Vector2f(200.0f, 200.0f));
+	sf::FloatRect south(mSprite.getPosition() + sf::Vector2f(0.0f, mSprite.getLocalBounds().height), sf::Vector2f(mSprite.getLocalBounds().width, 200.0f));
+	sf::FloatRect southWest(mSprite.getPosition() + sf::Vector2f(-200.0f, mSprite.getLocalBounds().height), sf::Vector2f(200.0f, 200.0f));
+	sf::FloatRect west(mSprite.getPosition() + sf::Vector2f(-200.0f, 0.0f), sf::Vector2f(200.0f, mSprite.getLocalBounds().height));
+
+	if (northWest.contains(mousePos)){
+		putAttack(std::move(attack), attackPolySide, 225.0f, getPosition());
+	}
+	else if (north.contains(mousePos)){
+		putAttack(std::move(attack), attackPolySide, 270.0f, getPosition() + sf::Vector2f(0.5f, 0.0f));
+	}
+	else if (northEast.contains(mousePos)){
+		putAttack(std::move(attack), attackPolySide, 315.0f, getPosition() + sf::Vector2f(1.0f, 0.0f));
+	}
+	else if (east.contains(mousePos)){
+		putAttack(std::move(attack), attackPolySide, 0.0f, getPosition() + sf::Vector2f(1.0f, 0.5f));
+	}
+	else if (southEast.contains(mousePos)){
+		putAttack(std::move(attack), attackPolySide, 45.0f, getPosition() + sf::Vector2f(1.0f, 1.0f));
+	}
+	else if (south.contains(mousePos)){
+		putAttack(std::move(attack), attackPolySide, 90.0f, getPosition() + sf::Vector2f(0.5f, 1.0f));
+	}
+	else if (southWest.contains(mousePos)){
+		putAttack(std::move(attack), attackPolySide, 135.0f, getPosition() + sf::Vector2f(0.0f, 1.0f));
+	}
+	else if (west.contains(mousePos)){
+		putAttack(std::move(attack), attackPolySide, 180.0f, getPosition() + sf::Vector2f(0.0f, 0.5f));
+	}
+}
+
+void Player::putAttack(std::unique_ptr<Entity> attack, ConvexPolygon& attackPoly, float rotAngle, sf::Vector2f worldPos){
+	attack->setPosition(worldPos);
+	attackPoly.rotate(rotAngle);
+	attackPoly.updateWorldPos(attack->getPosition());
+	attackPoly.calcNormals();
+	attack->getColPoly() = attackPoly;
+	int tileX = (int)attack->getPosition().x;
+	int tileY = (int)attack->getPosition().y;
+	mTilemap->getTile(tileX, tileY).pushLiving(std::move(attack));
+}

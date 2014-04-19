@@ -8,7 +8,7 @@ private:
 	sf::Sprite mSprite;
 
 public:
-	SpriteEntity(int type);
+	SpriteEntity(Tilemap* tilemap, int type);
 	void draw(sf::RenderWindow& window, const sf::Vector2f& camPos);
 };
 

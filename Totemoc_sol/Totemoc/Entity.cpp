@@ -1,11 +1,11 @@
 #include "Entity.hpp"
 #include "Tilemap.hpp"
 
-Entity::Entity() {
-
+Entity::Entity(Tilemap* tilemap) {
+	mTilemap = tilemap;
 }
 
-void Entity::update(const sf::Time& dt, Tilemap* tilemap){
+void Entity::update(const sf::Time& dt){
 
 }
 
@@ -39,6 +39,6 @@ void Entity::setColType(Entity::ColType colType){
 	mColType = colType;
 }
 
-void Entity::checkCollisions(Tilemap* tilemap){
+void Entity::checkCollisions(){
 
 }

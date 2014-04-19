@@ -16,6 +16,7 @@ public:
 	bool intersects(const ConvexPolygon& polyB) const;
 	sf::Vector2f checkUnwalkable(const ConvexPolygon& polyB) const;
 	void debugDraw(sf::RenderWindow& window, sf::Vector2f camPos);
+	void rotate(float degrees);
 
 private:
 	std::vector<sf::Vector2f> mVertices;

@@ -22,9 +22,9 @@ public:
 	SpritePtr mTallSprite;
 
 public:
-	Tile(int type);
+	Tile(Tilemap* tilemap, int type);
 	Tile(Tile&& tile);
-	void update(const sf::Time& dt, Tilemap* tilemap);
+	void update(const sf::Time& dt);
 	void drawLayer1(sf::RenderWindow& window, const sf::Vector2f& camPos);
 	void drawLayer2(sf::RenderWindow& window, const sf::Vector2f& camPos);
 	void drawLayer3(sf::RenderWindow& window, const sf::Vector2f& camPos);
