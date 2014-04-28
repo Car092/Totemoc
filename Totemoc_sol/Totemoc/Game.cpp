@@ -4,7 +4,8 @@ Game::Game() :
 mWindow(sf::VideoMode(Sizes::WINDOW_RESOLUTION.x, Sizes::WINDOW_RESOLUTION.y), "pTotemoc", sf::Style::Close), 
 mStats(),
 mWorld(mWindow),
-mPlayerController(mWorld.getPlayer())
+mPlayerController(mWorld.getPlayer()),
+mIsPaused(false)
 {
 
 }
@@ -19,7 +20,7 @@ void Game::run(){
 		while (fixedStepTime > Times::TIME_P_FRAME){
 			fixedStepTime -= Times::TIME_P_FRAME;
 			processInput();
-			update();
+			if(!mIsPaused) update();
 			mStats.updateLogic(clockLogic.restart());
 		}
 		render();
@@ -38,6 +39,10 @@ void Game::processInput(){
 	while (mWindow.pollEvent(event)){
 		if (event.type == sf::Event::Closed)
 			mWindow.close();
+		if (event.type == sf::Event::LostFocus)
+			mIsPaused = true;
+		if (event.type == sf::Event::GainedFocus)
+			mIsPaused = false;
 		mPlayerController.handleEvent(event);
 	}
 	mPlayerController.handleRealtimeInput();

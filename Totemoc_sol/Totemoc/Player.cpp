@@ -16,6 +16,7 @@ Player::Player(Tilemap* tilemap) : Entity(tilemap),
 	mColPoly.addVertex(sf::Vector2f(1.0f, 0.8f));
 	mColPoly.addVertex(sf::Vector2f(0.8f, 1.0f));
 	mColPoly.calcNormals();
+	setColType(Entity::ColType::nonwalkable);
 }
 
 void Player::update(const sf::Time& dt)
@@ -58,50 +59,7 @@ void Player::draw(sf::RenderWindow& window, const sf::Vector2f& camPos){
 }
 
 void Player::checkCollisions(){
-	std::vector<SpriteEntity*> floorTilesPtrs;
-	std::vector<Entity*> itemsPtrs;
-	std::vector<Entity*> livingPtrs;
-	std::vector<SpriteEntity*> tallTilesPtrs;
-	mColPoly.updateWorldPos(getPosition());
-	mTilemap->forEach_In_Zone(getPosition(), sf::Vector2i(4, 4), [&](Tile& tile, int tileX, int tileY)
-	{
-		floorTilesPtrs.push_back(tile.getFloorSprite().get());
-		for (Tile::EntityPtr& item : tile.getItems()){
-			itemsPtrs.push_back(item.get());
-		}
-		for (Tile::EntityPtr& living : tile.getLiving()){
-			livingPtrs.push_back(living.get());
-		}
-		tallTilesPtrs.push_back(tile.getTallSprite().get());
-	});
-	for (SpriteEntity* floorTile : floorTilesPtrs){
-		if (floorTile->getColType() == Entity::ColType::nonwalkable){
-			floorTile->getColPoly().updateWorldPos(floorTile->getPosition());
-			sf::Vector2f displVec = mColPoly.checkUnwalkable(floorTile->getColPoly());
-			move(displVec);
-		}
-	}
-	for (Entity* item : itemsPtrs){
-		if (item->getColType() == Entity::ColType::nonwalkable){
-			item->getColPoly().updateWorldPos(item->getPosition());
-			sf::Vector2f displVec = mColPoly.checkUnwalkable(item->getColPoly());
-			move(displVec);
-		}
-	}
-	for (Entity* livingElem : livingPtrs){
-		if (livingElem->getColType() == Entity::ColType::nonwalkable){
-			livingElem->getColPoly().updateWorldPos(livingElem->getPosition());
-			sf::Vector2f displVec = mColPoly.checkUnwalkable(livingElem->getColPoly());
-			move(displVec);
-		}
-	}
-	for (SpriteEntity* tallTile : tallTilesPtrs){
-		if (tallTile->getColType() == Entity::ColType::nonwalkable){
-			tallTile->getColPoly().updateWorldPos(tallTile->getPosition());
-			sf::Vector2f displVec = mColPoly.checkUnwalkable(tallTile->getColPoly());
-			move(displVec);
-		}
-	}
+	checkNonwalkable();
 }
 
 void Player::attack(sf::Vector2f mousePos){
@@ -148,13 +106,6 @@ void Player::attack(sf::Vector2f mousePos){
 	}
 }
 
-void Player::putAttack(std::unique_ptr<Entity> attack, ConvexPolygon& attackPoly, float rotAngle, sf::Vector2f worldPos){
-	attack->setPosition(worldPos);
-	attackPoly.rotate(rotAngle);
-	attackPoly.updateWorldPos(attack->getPosition());
-	attackPoly.calcNormals();
-	attack->getColPoly() = attackPoly;
-	int tileX = (int)attack->getPosition().x;
-	int tileY = (int)attack->getPosition().y;
-	mTilemap->getTile(tileX, tileY).pushLiving(std::move(attack));
+Entity::EntityType Player::getType(){
+	return Entity::player;
 }

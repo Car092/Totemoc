@@ -1,5 +1,6 @@
 #include "World.hpp"
 #include "Player.hpp"
+#include "Creature.hpp"
 
 World::World(sf::RenderWindow& window)
 : mWindow(window),
@@ -22,6 +23,18 @@ mPlayer(nullptr)
 
 	mTilemap.getTile(23, 20).mTallSprite = Tile::SpritePtr(new SpriteEntity(&mTilemap, 7));
 	mTilemap.getTile(23, 20).mTallSprite->setPosition(23.0f, 20.0f);
+
+	Tile::EntityPtr creature(new Creature(&mTilemap, 2.0f, sf::Vector2f(20.0f, 20.0f), mPlayer));
+	ConvexPolygon creaturePoly;
+	creaturePoly.addVertex(sf::Vector2f(0.0f, 0.0f));
+	creaturePoly.addVertex(sf::Vector2f(1.0f, 0.0f));
+	creaturePoly.addVertex(sf::Vector2f(1.0f, 1.0f));
+	creaturePoly.addVertex(sf::Vector2f(0.0f, 1.0f));
+	creaturePoly.updateWorldPos(creature->getPosition());
+	creaturePoly.calcNormals();
+	creature->getColPoly() = creaturePoly;
+	creature->setColType(Entity::ColType::nonwalkable);
+	mTilemap.getTile(20, 20).pushLiving(std::move(creature));
 }
 
 void World::initWorld(){

@@ -19,6 +19,7 @@ private:
 	Statistics mStats;
 	World mWorld;
 	PlayerController mPlayerController;
+	bool mIsPaused;
 
 	void processInput();
 	void update();

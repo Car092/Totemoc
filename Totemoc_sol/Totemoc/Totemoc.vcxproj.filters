@@ -60,6 +60,9 @@
     <ClCompile Include="Attack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Creature.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.hpp">
@@ -111,6 +114,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ConvexPolygon.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Creature.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UtilMath.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

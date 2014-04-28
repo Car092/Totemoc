@@ -7,7 +7,7 @@ class Attack : public Entity{
 public:
 	Attack(Tilemap* tilemap);
 	void draw(sf::RenderWindow& window, const sf::Vector2f& camPos);
-
+	void update(const sf::Time& dt);
 };
 
 #endif //TOTEMOC_ATTACK_HPP

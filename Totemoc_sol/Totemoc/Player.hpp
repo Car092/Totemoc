@@ -19,11 +19,9 @@ public:
 	void update(const sf::Time& dt);
 	void draw(sf::RenderWindow& window, const sf::Vector2f& camPos);
 	void checkCollisions();
-	void correctCol(const ConvexPolygon& polyB);
 	void attack(sf::Vector2f mousePos);
+	Entity::EntityType getType();
 
-private:
-	void putAttack(std::unique_ptr<Entity> attack, ConvexPolygon& attackPoly, float rotAngle, sf::Vector2f worldPos);
 };
 
 #endif //TOTEMOC_PLAYER_HPP

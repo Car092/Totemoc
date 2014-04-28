@@ -1,15 +1,9 @@
 #include "ConvexPolygon.hpp"
-
-float calcLength(sf::Vector2f vector){
-	return std::sqrtf(vector.x * vector.x + vector.y * vector.y);
-}
-
-float dot(sf::Vector2f v1, sf::Vector2f v2){
-	return v1.x * v2.x + v1.y * v2.y;
-}
+#include "UtilMath.hpp"
+#include "SizeConstants.hpp"
 
 ConvexPolygon::ConvexPolygon(){
-	mDebugShape.setScale(50.0f, 50.0f);
+	mDebugShape.setScale((float)Sizes::TILE_SIZE.x, (float)Sizes::TILE_SIZE.y);
 	mDebugShape.setFillColor(sf::Color::Magenta);
 	mDebugShape.setOutlineThickness(-0.05f);
 	mDebugShape.setOutlineColor(sf::Color::Black);
@@ -30,7 +24,7 @@ void ConvexPolygon::calcNormals(){
 		float temp = sepAxis.x;
 		sepAxis.x = sepAxis.y;
 		sepAxis.y = temp * -1.0f;
-		sepAxis /= calcLength(sepAxis);
+		sepAxis /= tot::calcLength(sepAxis);
 		mNormals.push_back(sepAxis);
 	}
 }
@@ -41,10 +35,10 @@ std::vector<sf::Vector2f> ConvexPolygon::getNormals() const{
 
 sf::Vector2f ConvexPolygon::calcProjInterval(const sf::Vector2f& normal) const{
 	sf::Vector2f projInterval;
-	float min = dot(mVertices[0] + mWorldPos, normal);
+	float min = tot::dot(mVertices[0] + mWorldPos, normal);
 	float max = min;
 	for (auto vertIt = ++mVertices.begin(); vertIt != mVertices.end(); vertIt++){
-		float length = dot(*vertIt + mWorldPos, normal);
+		float length = tot::dot(*vertIt + mWorldPos, normal);
 		if ( length > max){
 			max = length;
 		} else if (length < min){

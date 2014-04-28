@@ -26,11 +26,16 @@ void Tilemap::refreshTiles(const sf::Vector2f& playerPos){
 	for (Tile::EntityPtr& item : itemsMoved){
 		int tileX = (int)item->getPosition().x;
 		int tileY = (int)item->getPosition().y;
+		if (tileX < 0 || tileY < 0 || tileX >= (int)mMap[0].size() || tileY >= (int)mMap.size())
+			continue;
 		mMap[tileX][tileY].pushItem(std::move(item));
+		
 	}
 	for (Tile::EntityPtr& livingElem : livingMoved){
 		int tileX = (int)livingElem->getPosition().x;
 		int tileY = (int)livingElem->getPosition().y;
+		if (tileX < 0 || tileY < 0 || tileX >= (int)mMap[0].size() || tileY >= (int)mMap.size())
+			continue;
 		mMap[tileY][tileX].pushLiving(std::move(livingElem));
 	}
 }

@@ -63,3 +63,7 @@ void SpriteEntity::draw(sf::RenderWindow& window, const sf::Vector2f& camPos){
 	window.draw(mSprite, states);
 	mColPoly.debugDraw(window, camPos);
 }
+
+Entity::EntityType SpriteEntity::getType(){
+	return Entity::sprite;
+}

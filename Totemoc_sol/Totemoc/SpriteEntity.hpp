@@ -10,6 +10,7 @@ private:
 public:
 	SpriteEntity(Tilemap* tilemap, int type);
 	void draw(sf::RenderWindow& window, const sf::Vector2f& camPos);
+	Entity::EntityType getType();
 };
 
 #endif //TOTEMOC_SPRITEENTITY_HPP
