@@ -57,7 +57,7 @@ void Creature::attack(){
 		poly.addVertex(sf::Vector2f(1.0f, 0.0f));
 		poly.addVertex(sf::Vector2f(1.0f, 1.0f));
 		poly.addVertex(sf::Vector2f(0.0f, 1.0f));
-		putAttack(std::move(attack), poly, 0.0f, getPosition() + sf::Vector2f(5.0f, 0.0f));
+		putAttack(std::move(attack), poly, 0.0f, getPosition());
 		mAtkTimer.restart();
 	}
 }

@@ -42,6 +42,22 @@ void Tilemap::refreshTiles(const sf::Vector2f& playerPos){
 
 void Tilemap::update(const sf::Time& dt, const sf::Vector2f& playerPos){
 	forEach_In_Zone(playerPos, Sizes::EXTRA_TILES_PER_SCREEN, [&](Tile& tile, int tileX, int tileY){tile.update(dt); });
+	for (Tile::EntityPtr& item : mItemQueue){
+		int tileX = (int)item->getPosition().x;
+		int tileY = (int)item->getPosition().y;
+		if (tileX < 0 || tileY < 0 || tileX >= (int)mMap[0].size() || tileY >= (int)mMap.size())
+			continue;
+		mMap[tileY][tileX].pushItem(std::move(item));
+	}
+	for (Tile::EntityPtr& living : mLivingQueue){
+		int tileX = (int)living->getPosition().x;
+		int tileY = (int)living->getPosition().y;
+		if (tileX < 0 || tileY < 0 || tileX >= (int)mMap[0].size() || tileY >= (int)mMap.size())
+			continue;
+		mMap[tileY][tileX].pushLiving(std::move(living));
+	}
+	mItemQueue.clear();
+	mLivingQueue.clear();
 }
 
 void Tilemap::draw(sf::RenderWindow& window, const sf::Vector2f& playerPos){
@@ -54,4 +70,12 @@ void Tilemap::draw(sf::RenderWindow& window, const sf::Vector2f& playerPos){
 
 Tile& Tilemap::getTile(int tileX, int tileY){
 	return mMap[tileY][tileX];
+}
+
+void Tilemap::addItem(Tile::EntityPtr item){
+	mItemQueue.push_back(std::move(item));
+}
+
+void Tilemap::addLiving(Tile::EntityPtr living){
+	mLivingQueue.push_back(std::move(living));
 }

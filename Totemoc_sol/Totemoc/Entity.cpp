@@ -102,7 +102,5 @@ void Entity::putAttack(std::unique_ptr<Entity> attack, ConvexPolygon& attackPoly
 	attackPoly.updateWorldPos(attack->getPosition());
 	attackPoly.calcNormals();
 	attack->getColPoly() = attackPoly;
-	int tileX = (int)attack->getPosition().x;
-	int tileY = (int)attack->getPosition().y;
-	mTilemap->getTile(tileX, tileY).pushLiving(std::move(attack));
+	mTilemap->addLiving(std::move(attack));
 }

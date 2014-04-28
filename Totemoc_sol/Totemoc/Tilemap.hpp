@@ -9,6 +9,8 @@ class Player;
 class Tilemap {
 	private:
 		std::vector<std::vector<Tile>> mMap;
+		std::vector<Tile::EntityPtr> mItemQueue;
+		std::vector<Tile::EntityPtr> mLivingQueue;
 	public:
 		Tilemap();
 		void loadMap(std::vector<std::vector<int>>& map);
@@ -18,6 +20,8 @@ class Tilemap {
 		Tile& getTile(int tileX, int tileY);
 		template<typename Func>
 		void forEach_In_Zone(const sf::Vector2f& center, const sf::Vector2i& size, Func funcToDo);
+		void addItem(Tile::EntityPtr item);
+		void addLiving(Tile::EntityPtr living);
 };
 
 #include "Tilemap.inl"
