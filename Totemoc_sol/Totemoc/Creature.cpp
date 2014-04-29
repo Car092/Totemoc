@@ -14,6 +14,7 @@ Creature::Creature(Tilemap* tilemap, float speed, sf::Vector2f pos, Player* play
 
 void Creature::update(const sf::Time& dt)
 {
+	if (mIsDead) return;
 	trackPlayer();
 	attack();
 	move(mVelocity*mSpeed*dt.asSeconds());

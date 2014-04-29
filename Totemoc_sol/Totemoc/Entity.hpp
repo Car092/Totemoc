@@ -31,6 +31,7 @@ class Entity : public sf::Transformable{
 		Entity::ColType getColType();
 		virtual void checkCollisions();
 		void checkNonwalkable();
+		virtual void destroySelf();
 
 	protected:
 		void putAttack(std::unique_ptr<Entity> attack, ConvexPolygon& attackPoly, float rotAngle, sf::Vector2f worldPos);
@@ -40,5 +41,6 @@ class Entity : public sf::Transformable{
 		ConvexPolygon mColPoly;
 		Entity::ColType mColType;
 		Tilemap* mTilemap;
+		bool mIsDead;
 };
 #endif //TOTEMOC_ENTITY_HPP

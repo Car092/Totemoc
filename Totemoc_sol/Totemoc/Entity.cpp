@@ -1,12 +1,12 @@
 #include "Entity.hpp"
 #include "Tilemap.hpp"
 
-Entity::Entity(Tilemap* tilemap) {
+Entity::Entity(Tilemap* tilemap) : mIsDead(false) {
 	mTilemap = tilemap;
 }
 
 void Entity::update(const sf::Time& dt){
-
+	if (mIsDead) return;
 }
 
 void Entity::draw(sf::RenderWindow& window, const sf::Vector2f& camPos){
@@ -103,4 +103,8 @@ void Entity::putAttack(std::unique_ptr<Entity> attack, ConvexPolygon& attackPoly
 	attackPoly.calcNormals();
 	attack->getColPoly() = attackPoly;
 	mTilemap->addLiving(std::move(attack));
+}
+
+void Entity::destroySelf(){
+
 }

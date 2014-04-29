@@ -8,6 +8,7 @@ public:
 	Attack(Tilemap* tilemap);
 	void draw(sf::RenderWindow& window, const sf::Vector2f& camPos);
 	void update(const sf::Time& dt);
+	void destroySelf();
 };
 
 #endif //TOTEMOC_ATTACK_HPP

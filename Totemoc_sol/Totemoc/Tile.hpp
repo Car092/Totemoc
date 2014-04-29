@@ -34,6 +34,8 @@ public:
 	void dumpMoved(int tileX, int tileY, std::vector<EntityPtr>& itemsOut, std::vector<EntityPtr>& entitiesOut);
 	void pushItem(EntityPtr itemIn);
 	void pushLiving(EntityPtr entityIn);
+	bool deleteItem(Entity* item);
+	bool deleteLiving(Entity* living);
 	Tile& operator=(Tile&& tile);
 	SpritePtr& getFloorSprite();
 	std::vector<EntityPtr>& getItems();

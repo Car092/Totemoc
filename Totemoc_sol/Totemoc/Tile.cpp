@@ -110,3 +110,23 @@ std::vector<Tile::EntityPtr>& Tile::getLiving(){
 Tile::SpritePtr& Tile::getTallSprite(){
 	return mTallSprite;
 }
+
+bool Tile::deleteItem(Entity* entity){
+	for (auto it = mItems.begin(); it != mItems.end(); it++){
+		if ((*it).get() == entity){
+			mItems.erase(it);
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Tile::deleteLiving(Entity* entity){
+	for (auto it = mLiving.begin(); it != mLiving.end(); it++){
+		if ((*it).get() == entity){
+			mLiving.erase(it);
+			return true;
+		}
+	}
+	return false;
+}

@@ -21,6 +21,7 @@ Player::Player(Tilemap* tilemap) : Entity(tilemap),
 
 void Player::update(const sf::Time& dt)
 {
+	if (mIsDead) return;
 	if (mVelocity.x == 0.0f && mVelocity.y == 1.0f){
 		mSprite.setTexture(Resources::textures->get(Resources::TextureID::player));
 	}
